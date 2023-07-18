@@ -1,6 +1,5 @@
 from abc import ABC
 from typing import Union, Tuple, List
-from Utils import random_uniform_float
 import SimpleITK as sitk
 import numpy as np
 
@@ -29,8 +28,6 @@ class RotationTransform(SpatialTransform):
 
 
         super(RotationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
-
-
 
 
     def _get_transform(self,

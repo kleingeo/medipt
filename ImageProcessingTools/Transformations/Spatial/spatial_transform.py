@@ -3,7 +3,7 @@ import numpy as np
 import SimpleITK as sitk
 from typing import Union, Tuple, List
 from ImageProcessingTools.Transformations import image_index_to_phys
-from Utils.image_input_output_space import resolve_input_output_space
+from ImageProcessingTools.Utils.image_input_output_space import resolve_input_output_space
 
 class SpatialTransform(ABC):
     """

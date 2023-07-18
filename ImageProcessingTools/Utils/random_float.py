@@ -43,15 +43,13 @@ def initialize_rand_state(
 def random_binomial(
         n: Union[int, float, np.int_, np.float_],
         p: Union[int, float, np.int_, np.float_],
-        output_size: Union[List[Union[int, float]], Tuple[Union[int, float]], int, float, np.int_, np.float_],
+        output_size: Union[List[Union[int, float]], Tuple[Union[int, float]], int, float, np.int_, np.float_] = None,
 
         ignore_axis: Union[None, List[int], Tuple[int], int] = None,
 
         seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
 
-        legacy_random_state: bool = True,
-
-):
+        legacy_random_state: bool = True,) -> np.ndarray:
     '''
 
     :param n:
@@ -67,18 +65,16 @@ def random_binomial(
 
     binomial_out = rand_init.binomial(n=n, p=p, size=output_size)
 
-    if output_size is not None:
-        if ignore_axis is not None:
+    if (output_size is not None) and (ignore_axis is not None):
+        if isinstance(ignore_axis, int):
+            binomial_out[ignore_axis] = 1
 
-            if isinstance(ignore_axis, int):
-                binomial_out[ignore_axis] = 1
+        elif isinstance(ignore_axis, (list, tuple)):
+            for idx in ignore_axis:
+                binomial_out[idx] = 1
 
-            elif isinstance(ignore_axis, (list, tuple)):
-                for idx in ignore_axis:
-                    binomial_out[idx] = 1
-
-            else:
-                raise ValueError('ignore_axis must be an int, list, or tuple.')
+        else:
+            raise ValueError('ignore_axis must be an int, list, or tuple.')
 
     return binomial_out
 
