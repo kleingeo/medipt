@@ -49,7 +49,7 @@ coverage.xml
 *.pot
 
 # Sphinx documentation
-docs/_build/
+#docs/_build/
 
 # PyBuilder
 target/
@@ -72,5 +72,4 @@ target/
 *.pt
 *.pth
 
-
-
+functional_legacy/
