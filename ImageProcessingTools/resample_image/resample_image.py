@@ -1,6 +1,6 @@
 import numpy as np
 import SimpleITK as sitk
-from typing import Union, Tuple, List, Callable
+from typing import Union, Tuple, List, Callable, Iterable
 
 
 def get_sitk_interpolator(interpolator):
@@ -46,7 +46,7 @@ class ResampleImage:
                  interpolator: Union[str, int] = 'linear',
 
 
-                 post_processing_sitk: Callable = None,
+                 post_processing_sitk: Union[Callable, Union[List[Callable]], Tuple[Callable, ...]] = None,
 
                  np_pixel_type: Union[str, type] = np.float32,
                  default_pixel_value: Union[float, int, None] = None,
@@ -156,7 +156,12 @@ class ResampleImage:
                                                       *args, **kwargs)
 
         if self.post_processing_sitk is not None:
-            output_image_sitk = self.post_processing_sitk(output_image_sitk)
+            if isinstance(self.post_processing_sitk, (list, tuple)):
+                for post_processing_sitk in self.post_processing_sitk:
+                    output_image_sitk = post_processing_sitk(output_image_sitk)
+
+            else:
+                output_image_sitk = self.post_processing_sitk(output_image_sitk)
 
 
         return output_image_sitk

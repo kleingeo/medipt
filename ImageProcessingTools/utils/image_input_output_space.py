@@ -2,7 +2,7 @@ import SimpleITK as sitk
 import numpy as np
 from typing import Union, Tuple, List
 
-from ImageProcessingTools.Transformations import get_output_size_from_spacing, get_output_spacing_from_size
+from ImageProcessingTools.transformations import get_output_size_from_spacing, get_output_spacing_from_size
 
 
 

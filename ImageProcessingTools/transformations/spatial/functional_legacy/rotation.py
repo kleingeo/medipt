@@ -1,7 +1,7 @@
 import SimpleITK as sitk
 import numpy as np
 from typing import Union, Tuple, List
-from ImageProcessingTools.Utils import random_uniform_float
+from ImageProcessingTools.utils import random_uniform_float
 
 
 def rotation_transform(angles: Union[tuple, list], dim: int = 3):
