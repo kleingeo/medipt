@@ -5,7 +5,7 @@ import numpy as np
 
 from .spatial_transform import SpatialTransform
 from .random_affine_transform import RandomAffineTransform
-from ImageProcessingTools.transformations import physical_image_size
+from ImageProcessingTools.utils import physical_image_size
 
 
 

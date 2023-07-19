@@ -6,6 +6,7 @@ from typing import Union, Tuple, List, Callable, Iterable
 def get_sitk_interpolator(interpolator):
     """
     Return an sitk interpolator object for the given string.
+
     :param interpolator: Interpolator type as string.
                          'nearest': sitk.sitkNearestNeighbor
                          'linear': sitk.sitkLinear
@@ -14,7 +15,9 @@ def get_sitk_interpolator(interpolator):
                          'gaussian': sitk.sitkGaussian
                          'lanczos': sitk.sitkLanczosWindowedSinc
     :return: The sitk interpolator object.
+
     """
+
     if isinstance(interpolator, str):
 
         if interpolator == 'nearest':
