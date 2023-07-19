@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 import SimpleITK as sitk
 from typing import Union, Tuple, List
-from ImageProcessingTools.transformations import image_index_to_phys
+from ImageProcessingTools.utils import image_index_to_phys
 from ImageProcessingTools.utils.image_input_output_space import resolve_input_output_space
 
 class SpatialTransform(ABC):
@@ -33,6 +33,11 @@ class SpatialTransform(ABC):
 
         self.inverse_transform = None
 
+        self.displacement_field = None
+        self.inverted_displacement_field = None
+        self.inverted_transform_from_displacement = None
+
+
         assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
 
 
@@ -58,6 +63,26 @@ class SpatialTransform(ABC):
         raise NotImplementedError('This method must be implemented in a child class.')
 
 
+
+    def get_inverse_transform(self, *args, **kwargs):
+
+
+        if self.transform is not None:
+            self.inverse_transform = self.transform.GetInverse()
+
+        else:
+            raise ValueError('No transform found. Call get_transform first.')
+
+        # return self.inverse_transform
+
+    def get_displacement_field(self, *args, **kwargs):
+        raise NotImplementedError('This method must be implemented in a child class.')
+
+    def get_inverted_displacement_field(self, *args, **kwargs):
+        raise NotImplementedError('This method must be implemented in a child class.')
+
+    def get_inverted_transform_from_displacement(self, *args, **kwargs):
+        self.get_inverse_transform(*args, **kwargs)
 
     def get_image_params(
             self,
@@ -204,13 +229,3 @@ class SpatialTransform(ABC):
 
 
 
-    def get_inverse_transform(self, *args, **kwargs):
-
-
-        if self.transform is not None:
-            self.inverse_transform = self.transform.GetInverse()
-
-        else:
-            raise ValueError('No transform found. Call get_transform first.')
-
-        # return self.inverse_transform

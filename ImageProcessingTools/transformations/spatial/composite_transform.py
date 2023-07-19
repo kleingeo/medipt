@@ -47,15 +47,25 @@ class CompositeTransform:
 
         return compos
 
-    def create_inverse_composite(self, dim: int = 3):
+    def create_inverse_composite(self, dim: int = 3,
+                                 use_displacement_field: bool = False):
         compos = sitk.CompositeTransform(dim)
 
         for transform in self.transforms[::-1]:
             if isinstance(transform, SpatialTransform):
-                transform.get_inverse_transform()
-                sitk_inverse_transform = transform.inverse_transform
+
+                if use_displacement_field:
+                    transform.get_inverted_transform_from_displacement()
+                    sitk_inverse_transform = transform.inverted_transform_from_displacement
+
+                else:
+                    transform.get_inverse_transform()
+                    sitk_inverse_transform = transform.inverse_transform
+
                 compos.AddTransform(sitk_inverse_transform)
             else:
+                if use_displacement_field:
+                    raise Warning("The use_displacement_field option is not implemented for SimpleITK transforms.")
                 compos.AddTransform(transform.GetInverse())
 
         return compos

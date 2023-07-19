@@ -33,6 +33,10 @@ class ElasticDeformationTransform(SpatialTransform):
         self.inverse_transform = None
         self.transform_created = False
 
+        self.displacement_field = None
+        self.inverted_displacement_field = None
+        self.inverted_transform_from_displacement = None
+
         self.spline_order = None
         self.num_grid_points = None
 
@@ -106,55 +110,18 @@ class ElasticDeformationTransform(SpatialTransform):
 
         self.transform = self._get_deform_transform(spline_params, *args, **kwargs)
 
-        # self.t = t
-        #
-        # return self.t
 
-
-
-    # def get_transform_on_input(
-    #         self,
-    #         spline_params: Union[List[float], np.ndarray],
-    #         num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-    #         spline_order: int = 3,
-    #         *args, **kwargs):
-    #
-    #
-    #     self.get_image_params(*args, **kwargs)
-    #
-    #
-    #     t = self.get_transform(spline_params=spline_params,
-    #                            num_grid_points=num_grid_points,
-    #                            spline_order=spline_order,
-    #                            image_size=self.input_size,
-    #                            image_spacing=self.input_spacing,
-    #                            image_origin=self.input_origin,
-    #                            image_direction=self.input_direction,
-    #                            *args, **kwargs)
-    #
-    #     return t
-    #
-    # def get_transform_on_output(
-    #         self,
-    #         spline_params: Union[List[float], np.ndarray],
-    #         num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-    #         spline_order: int = 3,
-    #         *args, **kwargs):
-    #
-    #     self.get_image_params(*args, **kwargs)
-    #
-    #     t = self.get_transform(spline_params=spline_params,
-    #                            num_grid_points=num_grid_points,
-    #                            spline_order=spline_order,
-    #                            image_size=self.output_size,
-    #                            image_spacing=self.output_spacing,
-    #                            image_origin=self.output_size,
-    #                            image_direction=self.output_direction,
-    #                            *args, **kwargs)
-    #
-    #     return t
 
     def get_inverse_transform(self, *args, **kwargs):
+        '''
+        This determines the inverse transform for the elastic deformation.
+
+        Note: this is not suitable for proper resampling the transformed image back to the original state, but is
+        intended to be used with coordinate transforms. For image resampling, use the inverted deformation field.
+        :param args:
+        :param kwargs:
+        :return:
+        '''
 
         if self.transform is not None:
             if isinstance(self.spline_params, np.ndarray):
@@ -172,6 +139,37 @@ class ElasticDeformationTransform(SpatialTransform):
 
 
 
+    def get_displacement_field(self, *args, **kwargs):
+
+        if self.transform is not None:
+
+            displacement_field = sitk.TransformToDisplacementField(self.transform,
+                                                                  size=self.image_size,
+                                                                  outputSpacing=self.image_spacing,
+                                                                  outputDirection=self.image_direction,
+                                                                  outputOrigin=self.image_origin)
+
+            self.displacement_field = displacement_field
+        else:
+            raise ValueError('No transform found. Call get_transform first.')
+
+
+    def get_inverted_displacement_field(self, *args, **kwargs):
+
+        if self.displacement_field is None:
+            self.get_displacement_field()
+
+        self.inverted_displacement_field = sitk.InvertDisplacementField(self.displacement_field)
+
+
+    def get_inverted_transform_from_displacement(self):
+
+        if self.inverted_displacement_field is None:
+            self.get_inverted_displacement_field()
+
+        self.inverted_transform_from_displacement = sitk.DisplacementFieldTransform(self.inverted_displacement_field)
+
+
 
 class ElasticDeformationTransformInputImage(ElasticDeformationTransform):
 
@@ -187,13 +185,13 @@ class ElasticDeformationTransformInputImage(ElasticDeformationTransform):
 
 
         self.get_transform(spline_params=spline_params,
-                               num_grid_points=num_grid_points,
-                               spline_order=spline_order,
-                               image_size=self.input_size,
-                               image_spacing=self.input_spacing,
-                               image_origin=self.input_origin,
-                               image_direction=self.input_direction,
-                               *args, **kwargs)
+                           num_grid_points=num_grid_points,
+                           spline_order=spline_order,
+                           image_size=self.input_size,
+                           image_spacing=self.input_spacing,
+                           image_origin=self.input_origin,
+                           image_direction=self.input_direction,
+                           *args, **kwargs)
 
         # return t
 
