@@ -1,5 +1,11 @@
 version: 2
 
+
+formats: all
+
+sphinx:
+  configuration: docs/source/conf.py
+
 build:
    os: ubuntu-latest
    tools:
