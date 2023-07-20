@@ -7,7 +7,7 @@ inputs:
   numpy-version:
     required: false
     default: '1.25.1'
-  SimpleITK-version:
+  simpleitk-version:
     required: false
     default: '2.2.0'
   full_install:
@@ -32,11 +32,11 @@ runs:
     - name: Install Numpy
       if: ${{ inputs.numpy-version != 'nightly' }}
       run: |
-        pip install --no-index numpy==${{ numpy-version }}
+        pip install --no-index numpy==${{ inputs.numpy-version }}
       shell: bash
 
     - name: Install SimpleITK
-      if: ${{ inputs.numpy-version != 'nightly' }}
+      if: ${{ inputs.simpleitk-version != 'nightly' }}
       run: |
-        pip install --no-index numpy==${{ SimpleITK-version }}
+        pip install --no-index SimpleITK==${{ inputs.simpleitk-version }}
       shell: bash
