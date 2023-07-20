@@ -32,7 +32,7 @@ runs:
     - name: Install Numpy
 #      if: ${{ inputs.numpy-version != 'nightly' }}
       run: |
-        pip install --no-index numpy==1.25.1
+        pip install --no-index numpy==1.25
       shell: bash
 
     - name: Install SimpleITK
