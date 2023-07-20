@@ -25,18 +25,17 @@ runs:
         python-version: ${{ inputs.python-version }}
         check-latest: true
         cache: pip
-        cache-dependency-path: |
-          pyproject.toml
+        shell: bash
 
 
     - name: Install Numpy
-      if: ${{ inputs.numpy-version != 'nightly' }}
+#      if: ${{ inputs.numpy-version != 'nightly' }}
       run: |
-        pip install --no-index numpy==${{ inputs.numpy-version }}
+        pip install --no-index numpy==1.25.1
       shell: bash
 
     - name: Install SimpleITK
-      if: ${{ inputs.simpleitk-version != 'nightly' }}
+#      if: ${{ inputs.simpleitk-version != 'nightly' }}
       run: |
-        pip install --no-index SimpleITK==${{ inputs.simpleitk-version }}
+        pip install --no-index SimpleITK==2.2.0
       shell: bash
