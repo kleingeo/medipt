@@ -25,7 +25,8 @@ runs:
         python-version: ${{ inputs.python-version }}
         check-latest: true
         cache: pip
-        shell: bash
+        cache-dependency-path: |
+          pyproject.toml
 
 
     - name: Install Numpy
