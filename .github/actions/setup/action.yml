@@ -30,13 +30,13 @@ runs:
       run: python -m pip install --upgrade pip setuptools wheel
       shell: bash
 
-
-    - name: Install Numpy
-#      if: ${{ inputs.numpy-version != 'nightly' }}
-      run: pip install --no-index numpy
-      shell: bash
-
-    - name: Install SimpleITK
-#      if: ${{ inputs.simpleitk-version != 'nightly' }}
-      run: pip install --no-index SimpleITK==2.2.0
-      shell: bash
+#
+#    - name: Install Numpy
+##      if: ${{ inputs.numpy-version != 'nightly' }}
+#      run: pip install --no-index numpy
+#      shell: bash
+#
+#    - name: Install SimpleITK
+##      if: ${{ inputs.simpleitk-version != 'nightly' }}
+#      run: pip install --no-index SimpleITK==2.2.0
+#      shell: bash
