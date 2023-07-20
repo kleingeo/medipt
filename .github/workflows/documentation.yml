@@ -29,6 +29,13 @@ jobs:
       - name: Install Sphinx
         run: pip install sphinx==6.2.1 sphinx_rtd_theme
 
+      - name: Install numpy
+        run: pip install numpy
+
+      - name: Install SimpleITK
+        run: pip install SimpleITK==2.2.0
+
+
       - name: Build documentation
 #        if: steps.changed-files-specific.outputs.only_changed != 'true'
         run: |
