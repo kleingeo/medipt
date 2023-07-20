@@ -4,9 +4,6 @@ inputs:
   python-version:
     required: false
     default: '3.9'
-  numpy-version:
-    required: false
-    default: '1.25.1'
   simpleitk-version:
     required: false
     default: '2.2.0'
