@@ -1,14 +1,6 @@
 ImageProcessingTools.transformations.spatial package
 ====================================================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   ImageProcessingTools.transformations.spatial.functional_legacy
-
 Submodules
 ----------
 
