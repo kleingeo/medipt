@@ -26,6 +26,6 @@ jobs:
         uses: tj-actions/changed-files@v34
 
       - name: Build documentation
-        if: steps.changed-files-specific.outputs.only_changed != 'true'
+#        if: steps.changed-files-specific.outputs.only_changed != 'true'
         run: |
           cd docs && make clean && make html SPHINXOPTS="-W"  # Fail on warning.
