@@ -27,7 +27,7 @@ jobs:
 
 
       - name: Install Sphinx
-        run: pip install sphinx sphinx_rtd_theme
+        run: pip install sphinx==6.2.1 sphinx_rtd_theme
 
       - name: Build documentation
 #        if: steps.changed-files-specific.outputs.only_changed != 'true'
