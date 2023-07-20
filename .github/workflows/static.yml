@@ -1,0 +1,31 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+  pull_request:
+    paths:
+      - 'docs/**'
+
+jobs:
+
+  make_html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 0
+
+      -name: Get changed files
+        id: get_changed_files
+        uses: tj-actions/changed-files@v34
+
+      - name: Build documentation
+        if: steps.changed-files-specific.outputs.only_changed != 'true'
+        run: |
+          cd docs && make clean && make html SPHINXOPTS="-W"  # Fail on warning.
