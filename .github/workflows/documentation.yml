@@ -1,0 +1,42 @@
+name: documentation
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+  
+  
+jobs:
+
+  make_html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 0
+
+#      - name: Setup packages
+#        if: steps.changed-files-specific.outputs.only_changed != 'true'
+#        uses: ./.github/actions/setup
+#        with:
+#          full_install: false
+
+
+      - name: Install Sphinx
+        run: pip install sphinx==6.2.1 sphinx_rtd_theme
+
+      - name: Install numpy
+        run: pip install numpy
+
+      - name: Install SimpleITK
+        run: pip install SimpleITK==2.2.0
+
+
+      - name: Build documentation
+#        if: steps.changed-files-specific.outputs.only_changed != 'true'
+        run: |
+          cd docs && make clean && make html SPHINXOPTS="-W"  # Fail on warning.

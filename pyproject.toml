@@ -1,0 +1,33 @@
+[project]
+name="imageprocessingtools"
+version="0.1.0"
+authors=[
+    {name="Geoff Klein"},
+]
+description="Stuff"
+readme="README.md"
+requires-python=">=3.7"
+keywords=[
+    "medical-imaging",
+]
+
+dependencies=[
+    "numpy",
+    "SimpleITK>=2.2.0",
+]
+
+
+
+[tool.flit.module]
+name="imageprocessingtools"
+
+[tool.yapf]
+based_on_style = "pep8"
+split_before_named_assigns = false
+blank_line_before_nested_class_or_def = false
+
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+skip = [".gitingore", "__init__.py"]

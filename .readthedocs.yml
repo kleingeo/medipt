@@ -1,0 +1,18 @@
+version: 2
+
+
+formats: all
+
+sphinx:
+  configuration: docs/source/conf.py
+
+build:
+   os: ubuntu-latest
+   tools:
+      python: "3.9"
+
+python:
+   install:
+      - requirements: docs/requirements.txt
+      - method: pip
+        path: .
