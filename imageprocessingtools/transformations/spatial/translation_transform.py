@@ -1,11 +1,11 @@
 from typing import Union, Tuple, List
-from ImageProcessingTools.utils import random_uniform_float
+from imageprocessingtools.utils import random_uniform_float
 import SimpleITK as sitk
 import numpy as np
 
 from .spatial_transform import SpatialTransform
 from .random_affine_transform import RandomAffineTransform
-from ImageProcessingTools.utils import physical_image_size
+from imageprocessingtools.utils import physical_image_size
 
 
 

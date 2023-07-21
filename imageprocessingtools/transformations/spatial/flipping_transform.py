@@ -4,7 +4,7 @@ import numpy as np
 
 from .spatial_transform import SpatialTransform
 from .random_affine_transform import RandomAffineTransform
-from ImageProcessingTools.utils import random_binomial
+from imageprocessingtools.utils import random_binomial
 
 
 class FlippingTransform(SpatialTransform):

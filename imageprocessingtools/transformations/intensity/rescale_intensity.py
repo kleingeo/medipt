@@ -1,7 +1,7 @@
 from typing import Union, Tuple, List
 import SimpleITK as sitk
 import numpy as np
-from ImageProcessingTools.utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
+from imageprocessingtools.utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
 
 
 
