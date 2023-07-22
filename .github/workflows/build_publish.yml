@@ -18,7 +18,7 @@ jobs:
             fetch-depth: 0
 
       - name: Setup Python
-        run: python -m pip install --user --upgrade pip build twine
+        run: python -m pip install --user --upgrade pip build twine setuptools
         shell: bash
 
       - name: Build wheel
