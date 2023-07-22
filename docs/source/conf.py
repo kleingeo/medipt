@@ -11,10 +11,10 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath('../..'))
 
-project = 'ImageProcessingTools'
+project = 'MedIPT'
 copyright = '2023, Geoff Klein'
 author = 'Geoff Klein'
-release = '0.1'
+release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
