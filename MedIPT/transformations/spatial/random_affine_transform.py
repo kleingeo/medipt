@@ -1,5 +1,5 @@
 from typing import Union, Tuple, List
-from imageprocessingtools.utils import random_uniform_float
+from ...utils import random_uniform_float
 
 import numpy as np
 

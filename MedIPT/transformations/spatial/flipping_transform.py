@@ -3,8 +3,7 @@ import SimpleITK as sitk
 import numpy as np
 
 from .spatial_transform import SpatialTransform
-from .random_affine_transform import RandomAffineTransform
-from imageprocessingtools.utils import random_binomial
+from ...utils import random_binomial
 
 
 class FlippingTransform(SpatialTransform):

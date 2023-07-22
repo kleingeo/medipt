@@ -1,9 +1,9 @@
 from typing import Union, Tuple, List
 import SimpleITK as sitk
 import numpy as np
-from imageprocessingtools.utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
-from imageprocessingtools.utils import random_uniform_float
-from imageprocessingtools.utils import gaussian_blur, gaussian_noise
+from ...utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
+from ...utils import random_uniform_float
+from ...utils import gaussian_blur, gaussian_noise
 
 
 class GaussianNoise:

@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 import numpy as np
 import SimpleITK as sitk
 from typing import Union, Tuple, List
-from imageprocessingtools.utils import image_index_to_phys
-from imageprocessingtools.utils.image_input_output_space import resolve_input_output_space
+from ...utils import image_index_to_phys
+from ...utils.image_input_output_space import resolve_input_output_space
 
 class SpatialTransform(ABC):
     """
