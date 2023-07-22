@@ -22,8 +22,12 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install dependencies
+          run: python3 -m pip install --user --upgrade pip build twine setuptools
+          shell: bash
+
       - name: Build wheel
-        run: python3 -m build --sdist --wheel --outdir dist/ .
+        run: python -m build --sdist --wheel --outdir dist/ .
         shell: bash
 
       - name: Publish to Test PyPI
