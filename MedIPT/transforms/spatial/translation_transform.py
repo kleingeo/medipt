@@ -159,4 +159,3 @@ class RandomFactorInput(TranslateTransform):
 
         self.transform = self._get_transform(translation)
 
-        # return self.t

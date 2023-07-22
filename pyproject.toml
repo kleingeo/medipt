@@ -8,6 +8,7 @@ version="0.0.1"
 authors=[
     {name="Geoff Klein"},
 ]
+license="BSD 3-Clause"
 description="Stuff"
 readme="README.md"
 requires-python=">=3.7"
@@ -33,3 +34,7 @@ blank_line_before_nested_class_or_def = false
 multi_line_output = 3
 include_trailing_comma = true
 skip = [".gitingore", "__init__.py"]
+
+
+[project.urls]
+repository="https://github.com/kleingeo/ImageProcessingTools"

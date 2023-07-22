@@ -1,3 +1,3 @@
 from . import utils
-from . import transformations
+from . import transforms
 from . import resample_image
