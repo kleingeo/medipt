@@ -32,7 +32,7 @@ jobs:
         run: pip install -r docs/requirements.txt
 
       - name: Sphinx build
-        run: sphinx-build -b html docs/source build/html
+        run: sphinx-build -b html docs/source build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -40,7 +40,7 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/
+          publish_dir: build
           force_orphan: true
 
 

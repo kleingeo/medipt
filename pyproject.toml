@@ -4,15 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name="medipt"
-<<<<<<< Updated upstream
-version="0.0.3.8"
-=======
-<<<<<<< HEAD
-version="0.0.2"
-=======
-version="0.0.3.8"
->>>>>>> master
->>>>>>> Stashed changes
+version="0.0.3"
 authors=[
     {name="Geoff Klein"},
 ]
