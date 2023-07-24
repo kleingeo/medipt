@@ -30,9 +30,7 @@ jobs:
 
       - name: Install dependencies
         - run: |
-          pip install --user --upgrade pip
           pip install -r docs/requirements.txt
-
           shell: bash
 
       - name: Sphinx build
