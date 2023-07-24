@@ -25,18 +25,41 @@ jobs:
 #        with:
 #          full_install: false
 
+      - name: Setup python
+        uses: actions/setup-python@v3
 
-      - name: Install Sphinx
-        run: pip install sphinx==6.2.1 sphinx_rtd_theme
+      - name: Install dependencies
+        - run: |
+          pip install --user --upgrade pip
+          pip install -r docs/requirements.txt
 
-      - name: Install numpy
-        run: pip install numpy
+          shell: bash
 
-      - name: Install SimpleITK
-        run: pip install SimpleITK==2.2.0
+      - name: Sphinx build
+        run: sphinx-build -b html docs/source build/html
 
 
-      - name: Build documentation
-#        if: steps.changed-files-specific.outputs.only_changed != 'true'
-        run: |
-          cd docs && make clean && make html SPHINXOPTS="-W"  # Fail on warning.
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}  || ${{ github.event_name == 'workflow_dispatch' }}
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _build/
+          force_orphan: true
+
+
+
+#      - name: Install Sphinx
+#        run: pip install sphinx==6.2.1 sphinx_rtd_theme
+#
+#      - name: Install numpy
+#        run: pip install numpy
+#
+#      - name: Install SimpleITK
+#        run: pip install SimpleITK==2.2.0
+#
+#
+#      - name: Build documentation
+##        if: steps.changed-files-specific.outputs.only_changed != 'true'
+#        run: |
+#          cd docs && make clean && make html SPHINXOPTS="-W"  # Fail on warning.

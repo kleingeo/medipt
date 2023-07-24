@@ -24,6 +24,7 @@ extensions = []
 templates_path = ['_templates']
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx_autodoc_typehints',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
@@ -31,6 +32,7 @@ extensions = [
     'sphinx.ext.viewcode',
 ]
 
+autodoc_typehints = "description"
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/', None),
