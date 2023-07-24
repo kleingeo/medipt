@@ -40,7 +40,7 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}  || ${{ github.event_name == 'workflow_dispatch' }}
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
+          publish_dir: build/
           force_orphan: true
 
 
