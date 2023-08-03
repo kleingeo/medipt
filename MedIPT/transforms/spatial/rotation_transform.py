@@ -71,6 +71,8 @@ class RotationTransform(SpatialTransform):
 
         # return self.t
 
+        a = 1
+
 
     def get_transform(self,
                       angles: Union[List[float], Tuple[float, ...], float],
@@ -80,7 +82,7 @@ class RotationTransform(SpatialTransform):
 
         # return t
 
-class RandomRotationTransform(RotationTransform, RandomAffineTransform):
+class RandomRotation(RotationTransform, RandomAffineTransform):
     """
     A rotation transformation with random angles (in radian).
     """
@@ -103,7 +105,7 @@ class RandomRotationTransform(RotationTransform, RandomAffineTransform):
         """
 
 
-        super(RandomRotationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(RandomRotation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
 
 
@@ -115,8 +117,7 @@ class RandomRotationTransform(RotationTransform, RandomAffineTransform):
                              *args, **kwargs):
 
 
-        self.t = self._get_random_transform(min_angles, max_angles, transformation_dict, *args, **kwargs)
+        self._get_random_transform(min_angles, max_angles, transformation_dict=transformation_dict, *args, **kwargs)
 
-        return self.t
 
 

@@ -1,6 +1,6 @@
 from typing import Union, Tuple, List
 from ...utils import random_uniform_float
-from ...utils import physical_image_size
+from ...utils import physical_image_size_no_origin, physical_image_size
 import SimpleITK as sitk
 import numpy as np
 
@@ -10,7 +10,7 @@ from .random_affine_transform import RandomAffineTransform
 
 
 
-class TranslateTransform(SpatialTransform):
+class TranslationTransform(SpatialTransform):
     """
     Translation transformation base class.
     """
@@ -28,7 +28,7 @@ class TranslateTransform(SpatialTransform):
         :param kwargs: Keyword arguments passed to super init.
         """
 
-        super(TranslateTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(TranslationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
         assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
 
@@ -46,10 +46,18 @@ class TranslateTransform(SpatialTransform):
 
         t = sitk.AffineTransform(self.dim)
         t.Translate(translation)
-        return t
+
+        self.transform = t
+        # return t
+
+    def get_transform(self,
+                      translation: Union[List[float], Tuple[float, ...], float],
+                      *args, **kwargs):
+
+        self._get_transform(translation, *args, **kwargs)
 
 
-class RandomTranslation(RandomAffineTransform, TranslateTransform):
+class RandomTranslation(RandomAffineTransform, TranslationTransform):
     """
     A translation transformation with a random offset.
     """
@@ -75,46 +83,289 @@ class RandomTranslation(RandomAffineTransform, TranslateTransform):
     def get_random_transform(self,
                              min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
                              max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                             transformation_dict, *args, **kwargs):
+                             transformation_dict=None,
+                             *args, **kwargs):
 
 
-        self.transform = self._get_random_transform(min_trans, max_trans, transformation_dict, *args, **kwargs)
-
+        self._get_random_transform(min_trans, max_trans, *args, **kwargs)
         # return self.transform
 
 
 
-class TranslateInputOriginToInputCenter(TranslateTransform):
+class TranslateInputCenterToInputOrigin(TranslationTransform):
     def get_transform(self,
                       *args, **kwargs):
 
         input_center_phys = self.get_input_center(*args, **kwargs)
         input_origin_phys = self.get_input_origin(*args, **kwargs)
 
-        translation = tuple([input_origin_phys[i] - input_center_phys[i] for i in range(self.dim)])
+        # translation = tuple([input_center_phys[i] - input_origin_phys[i] for i in range(self.dim)])
+        translation = tuple([input_center_phys[i] for i in range(self.dim)])
 
-        self.transform = self._get_transform(translation)
+        self._get_transform(translation)
 
         # return self.t
 
-class TranslateOutputOriginToOutputCenter(TranslateTransform):
+
+
+class TranslateInputOriginToOutputCenter(TranslationTransform):
     def get_transform(self,
                       *args, **kwargs):
 
+        input_origin_phys = self.get_input_origin(*args, **kwargs)
         output_center_phys = self.get_output_center(*args, **kwargs)
-        output_origin_phys = self.get_output_origin(*args, **kwargs)
 
-        translation = tuple([output_origin_phys[i] - output_center_phys[i] for i in range(self.dim)])
+        # translation = tuple([input_origin_phys[i] - output_center_phys[i] for i in range(self.dim)])
+        translation = tuple([-output_center_phys[i] for i in range(self.dim)])
 
-        self.transform = self._get_transform(translation)
+        self._get_transform(translation)
+
+
+class TranslateInputCenterToOutputCenter(TranslationTransform):
+    def get_transform(self,
+                      *args, **kwargs):
+
+        input_center_phys = self.get_input_center(*args, **kwargs)
+        output_center_phys = self.get_output_center(*args, **kwargs)
+
+
+        translation = tuple([input_center_phys[i] - output_center_phys[i] for i in range(self.dim)])
+
+        self._get_transform(translation)
 
         # return self.t
 
 
 
+#
+# class TranslateInputOriginToInputCenter(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_origin_phys = self.get_input_origin(*args, **kwargs)
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#
+#         translation = tuple([input_origin_phys[i] - input_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+#
+#
+# class TranslateInputOriginToOutputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_origin_phys = self.get_input_origin(*args, **kwargs)
+#         output_origin_phys = self.get_output_origin(*args, **kwargs)
+#
+#
+#         translation = tuple([input_origin_phys[i] - output_origin_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+#
+#
+#
+#
+#
+#
+# class TranslateInputCenterToOutputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#         output_origin_phys = self.get_input_origin(*args, **kwargs)
+#
+#
+#         translation = tuple([input_center_phys[i] - output_origin_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
 
 
-class RandomFactorInput(TranslateTransform):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class TranslateInputCenterToInputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_origin_phys = self.get_input_origin(*args, **kwargs)
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#
+#
+#         translation = tuple([input_center_phys[i] - input_origin_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+#
+#
+# class TranslateInputOriginToOutputCenter(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#         input_origin_phys = self.get_input_origin(*args, **kwargs)
+#
+#
+#         translation = tuple([input_origin_phys[i] - output_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+# class TranslateOutputOriginToOutputCenter(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#         output_origin_phys = self.get_output_origin(*args, **kwargs)
+#
+#         translation = tuple([output_origin_phys[i] - output_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+# class TranslateInputCenterToOutputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#         # output_origin_phys = self.get_output_origin(*args, **kwargs)
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#
+#         translation = tuple([-input_center_phys[i] + output_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+# class TranslateInputOriginToOutputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_origin_phys = self.get_input_origin(*args, **kwargs)
+#         # output_origin_phys = self.get_output_origin(*args, **kwargs)
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#
+#         translation = tuple([input_origin_phys[i] - output_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+#
+#
+#
+# class TranslateOutputCenterToOutputOrigin(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#         output_origin_phys = self.get_output_origin(*args, **kwargs)
+#
+#         translation = tuple([output_center_phys[i] - output_origin_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+# class TranslateInputCenterToOutputCenter(TranslationTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#
+#         translation = tuple([input_center_phys[i] - output_center_phys[i] for i in range(self.dim)])
+#
+#         self._get_transform(translation)
+#
+#         # return self.t
+
+
+
+
+# class TranslateInputCenterToOutputCenter(TranslateTransform):
+#     def get_transform(self,
+#                       *args, **kwargs):
+#
+#         input_center_phys = self.get_input_center(*args, **kwargs)
+#         output_center_phys = self.get_output_center(*args, **kwargs)
+#
+#         # additional = [70, 70, 0]
+#         additional = [0, 0, 0]
+#         translation = tuple([input_center_phys[i] - output_center_phys[i] + additional[i] for i in range(self.dim)])
+#
+#
+#
+#
+#         # translation = self.get_output_center(*args, **kwargs) self.get_input_origin(*args, **kwargs)
+#         #
+#         # translation = [-1 * t for t in translation]
+#
+#         self._get_transform(translation)
+
+
+class RandomBBoxTranslation(RandomAffineTransform, TranslationTransform):
+    def get_random_transform(self,
+                             transformation_dict: dict = None,
+                             *args, **kwargs):
+
+        bbox_center_start = kwargs.get('centroids_bb_start', None)
+        bbox_center_end = kwargs.get('centroids_bb_end', None)
+
+        bbox_extent = bbox_center_end - bbox_center_start
+
+        if bbox_center_start is None or bbox_center_end is None:
+            raise ValueError('Centroid bounding box start and end must be provided when using '
+                             '"RandomBBoxTranslation".')
+
+        output_size = kwargs.get('output_size', None)
+        output_spacing = kwargs.get('output_spacing', None)
+        output_direction = kwargs.get('output_direction', None)
+        dim = kwargs.get('dim', None)
+
+        output_image_size_phys = physical_image_size_no_origin(dim=dim,
+                                                               size=output_size,
+                                                               spacing=output_spacing,
+                                                               direction=output_direction)
+
+        extra_space = bbox_extent - np.array(output_image_size_phys)
+
+        # Only translate if the bbox is larger than the output image size
+        extra_space[extra_space < 0] = 0
+
+        max_trans = extra_space / 2
+        min_trans = extra_space / 2 * -1
+
+
+        self._get_random_transform(min_trans, max_trans, transformation_dict=transformation_dict,
+                                   *args, **kwargs)
+
+
+
+
+
+class RandomFactorInput(TranslationTransform):
     """
     A translation transform that translates the input image by a random factor, such that it will be cropped.
     The input center should usually be at the origin before this transformation.
@@ -142,10 +393,10 @@ class RandomFactorInput(TranslateTransform):
         # assert np.allclose(self.input_origin, np.zeros(self.dim)), 'this transformation only works for zeros origin, is: ' + self.input_origin
 
 
-        phys_input_size = physical_image_size(dim=self.dim,
-                                              size=self.input_size,
-                                              spacing=self.input_spacing,
-                                              direction=self.input_direction)
+        phys_input_size = physical_image_size_no_origin(dim=self.dim,
+                                                        size=self.input_size,
+                                                        spacing=self.input_spacing,
+                                                        direction=self.input_direction)
 
         phys_input_size = np.array(phys_input_size) - np.array(remove_border)
 

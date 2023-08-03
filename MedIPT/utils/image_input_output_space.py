@@ -110,7 +110,7 @@ if __name__ == '__main__':
 
     dim = 3
 
-    input_image = sitk.ReadImage('../../sub-verse260.nii.gz')
+    input_image = sitk.ReadImage('../../testing_files/sub-verse260.nii.gz')
 
     output_size = [256, 256, 256]
     output_spacing = [3.0, 5.0, 2.0]

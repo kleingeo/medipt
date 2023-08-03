@@ -154,9 +154,9 @@ class ResampleImage:
                              *args, **kwargs
                              ) -> Union[List[sitk.Image], Tuple[sitk.Image, ...], sitk.Image]:
 
-        output_image_sitk = self.get_resampled_images(image, input_output_space_dict,
-                                                      reference_image, transform,
-                                                      *args, **kwargs)
+        output_image_sitk = self.get_images(image, input_output_space_dict,
+                                            reference_image, transform,
+                                            *args, **kwargs)
 
         if self.post_processing_sitk is not None:
             if isinstance(self.post_processing_sitk, (list, tuple)):

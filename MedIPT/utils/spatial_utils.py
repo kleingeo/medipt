@@ -15,7 +15,19 @@ def physical_image_size(dim: int,
                         size: Tuple[int, ...],
                         spacing: Tuple[float, ...],
                         direction: Tuple[float, ...],
+                        origin: Tuple[float, ...],
                         *args, **kwargs) -> List[float]:
+
+    phys_size = np.array(origin) + np.matmul(size, np.matmul(np.array(direction).reshape([dim, dim]), np.diag(spacing)))
+
+    return list(phys_size)
+
+
+def physical_image_size_no_origin(dim: int,
+                                  size: Tuple[int, ...],
+                                  spacing: Tuple[float, ...],
+                                  direction: Tuple[float, ...],
+                                  *args, **kwargs) -> List[float]:
 
     phys_size = np.matmul(size, np.matmul(np.array(direction).reshape([dim, dim]), np.diag(spacing)))
 
@@ -31,10 +43,10 @@ def get_output_size_from_spacing(dim: int,
                                  output_direction: Union[List[int], Tuple[int, ...]] = None,
                                  *args, **kwargs):
 
-    input_total_space = physical_image_size(dim=dim,
-                                            size=input_size,
-                                            spacing=input_spacing,
-                                            direction=input_direction)
+    input_total_space = physical_image_size_no_origin(dim=dim,
+                                                      size=input_size,
+                                                      spacing=input_spacing,
+                                                      direction=input_direction)
 
     output_direction_reshape = np.array(output_direction).reshape([dim, dim])
 
@@ -54,10 +66,10 @@ def get_output_spacing_from_size(dim: int,
                                  output_direction: Union[List[int], Tuple[int, ...]] = None,
                                  *args, **kwargs):
 
-    input_total_space = physical_image_size(dim=dim,
-                                            size=input_size,
-                                            spacing=input_spacing,
-                                            direction=input_direction)
+    input_total_space = physical_image_size_no_origin(dim=dim,
+                                                      size=input_size,
+                                                      spacing=input_spacing,
+                                                      direction=input_direction)
 
     output_direction_reshape = np.array(output_direction).reshape([dim, dim])
 
@@ -70,7 +82,7 @@ def get_output_spacing_from_size(dim: int,
 
 
 def image_index_to_phys(dim: int,
-                        index_coords: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,
+                        index_coords: Union[List[Union[int, float]], Tuple[Union[int, float], ...]],
                         image: sitk.Image = None,
                         size: Tuple[int, ...] = None,
                         origin: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,

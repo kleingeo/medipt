@@ -66,7 +66,7 @@ class FlippingTransform(SpatialTransform):
 
 
 
-class RandomFlippingTransform(FlippingTransform):
+class RandomFlipping(FlippingTransform):
 
     def get_random_transform(self,
                              flip_axes: Union[

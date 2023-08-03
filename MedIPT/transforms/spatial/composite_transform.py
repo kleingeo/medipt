@@ -36,7 +36,7 @@ class CompositeTransform:
         else:
             self.transforms.append(transform)
 
-    def create_composite(self, dim: int = 3):
+    def create_composite(self, dim: int = 3) -> sitk.Transform:
         compos = sitk.CompositeTransform(dim)
         for transform in self.transforms:
             if isinstance(transform, SpatialTransform):

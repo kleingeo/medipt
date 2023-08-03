@@ -6,7 +6,7 @@ import numpy as np
 from .spatial_transform import SpatialTransform
 
 
-class ElasticDeformationTransform(SpatialTransform):
+class ElasticDeformation(SpatialTransform):
     """
     Rotation transformation base class.
     """
@@ -26,7 +26,7 @@ class ElasticDeformationTransform(SpatialTransform):
         """
 
 
-        super(ElasticDeformationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(ElasticDeformation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
         self.spline_params = None
         self.transform = None
@@ -66,7 +66,9 @@ class ElasticDeformationTransform(SpatialTransform):
 
         return t
 
-    def get_transform(
+
+
+    def _get_transform(
             self,
             spline_params: Union[List[float], np.ndarray],
             image_size: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,
@@ -74,8 +76,8 @@ class ElasticDeformationTransform(SpatialTransform):
             image_origin: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,
             image_direction: Union[List[Union[int, float]], Tuple[Union[int, float]]] = None,
 
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-            # max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = 50,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
+            # max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = 25,
             spline_order: int = 3,
 
             *args, **kwargs):
@@ -111,6 +113,11 @@ class ElasticDeformationTransform(SpatialTransform):
         self.transform = self._get_deform_transform(spline_params, *args, **kwargs)
 
 
+    def get_transform(self,
+                      *args, **kwargs):
+
+        self._get_transform(*args, **kwargs)
+
 
     def get_inverse_transform(self, *args, **kwargs):
         '''
@@ -129,6 +136,8 @@ class ElasticDeformationTransform(SpatialTransform):
             else:
                 spline_params_inv = [-1 * param for param in self.spline_params]
 
+            if isinstance(spline_params_inv, np.ndarray):
+                spline_params_inv = spline_params_inv.flatten(order='F').tolist()
 
             self.inverse_transform = self._get_deform_transform(spline_params_inv, *args, **kwargs)
 
@@ -171,12 +180,12 @@ class ElasticDeformationTransform(SpatialTransform):
 
 
 
-class ElasticDeformationTransformInputImage(ElasticDeformationTransform):
+class ElasticDeformationInputImage(ElasticDeformation):
 
     def get_transform_on_input(
             self,
             spline_params: Union[List[float], np.ndarray],
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
             spline_order: int = 3,
             *args, **kwargs):
 
@@ -196,12 +205,12 @@ class ElasticDeformationTransformInputImage(ElasticDeformationTransform):
         # return t
 
 
-class ElasticDeformationTransformOutputImage(ElasticDeformationTransform):
+class ElasticDeformationOutputImage(ElasticDeformation):
 
     def get_transform_on_output(
             self,
             spline_params: Union[List[float], np.ndarray],
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
             spline_order: int = 3,
             *args, **kwargs):
 
@@ -219,7 +228,7 @@ class ElasticDeformationTransformOutputImage(ElasticDeformationTransform):
         # return t
 
 
-class RandomElasticDeformationTransform(ElasticDeformationTransform):
+class RandomElasticDeformation(ElasticDeformation):
 
     def __init__(self,
                  dim: int = 3,
@@ -229,14 +238,14 @@ class RandomElasticDeformationTransform(ElasticDeformationTransform):
                  *args, **kwargs):
 
 
-        super(RandomElasticDeformationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(RandomElasticDeformation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
 
 
     def get_random_spline_params(
             self,
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = 7,
-            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = 50,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = (6, 6, 6),
+            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], np.ndarray] = (25, 25, 25),
             *args, **kwargs, ) -> np.ndarray:
 
         output_size = *num_grid_points, self.dim
@@ -258,14 +267,19 @@ class RandomElasticDeformationTransform(ElasticDeformationTransform):
             image_direction: Union[List[Union[int, float]], Tuple[Union[int, float]], np.ndarray] = None,
 
 
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 50,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
+            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 25,
 
 
             spline_order: int = 3,
 
             *args, **kwargs):
 
+        if isinstance(num_grid_points, (int, float)):
+            num_grid_points = [num_grid_points] * self.dim
+
+        if isinstance(max_deformation_displacement, (int, float)):
+            max_deformation_displacement = [max_deformation_displacement] * self.dim
 
         self.spline_params = self.get_random_spline_params(num_grid_points, max_deformation_displacement,
                                                            *args, **kwargs)
@@ -284,11 +298,11 @@ class RandomElasticDeformationTransform(ElasticDeformationTransform):
 
 
 
-class RandomElasticDeformationTransformInputImage(RandomElasticDeformationTransform):
+class RandomElasticDeformationTransformInputImage(RandomElasticDeformation):
     def get_random_transform_on_input(
             self,
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 50,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
+            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 25,
             spline_order: int = 3,
             *args, **kwargs):
 
@@ -306,11 +320,11 @@ class RandomElasticDeformationTransformInputImage(RandomElasticDeformationTransf
         # return t
 
 
-class RandomElasticDeformationTransformOutputImage(RandomElasticDeformationTransform):
+class RandomElasticDeformationTransformOutputImage(RandomElasticDeformation):
     def get_random_transform_on_output(
             self,
-            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 7,
-            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 50,
+            num_grid_points: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 6,
+            max_deformation_displacement: Union[List[Union[int, float]], Tuple[Union[int, float], ...], int, float] = 25,
             spline_order: int = 3,
             *args, **kwargs):
 

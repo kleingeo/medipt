@@ -76,7 +76,7 @@ class ScalingTransform(SpatialTransform):
 
 
 
-class RandomScalingTransform(ScalingTransform, RandomAffineTransform):
+class RandomScaling(ScalingTransform, RandomAffineTransform):
 
     def __init__(self,
                  dim: int,
@@ -86,21 +86,58 @@ class RandomScalingTransform(ScalingTransform, RandomAffineTransform):
 
                  *args, **kwargs):
 
-        super(RandomScalingTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(RandomScaling, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
 
 
     def get_random_transform(self,
-                 min_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
-                 max_maxing: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
+                 min_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                 max_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
                  transformation_dict: dict = None,
                  *args, **kwargs):
 
 
-        self.transform = self._get_random_transform(min_scaling, max_maxing, transformation_dict,
-                                           value_offset=1.0,
-                                           *args, **kwargs)
+        self._get_random_transform(min_scaling, max_scaling,
+                                   transform_dict=transformation_dict,
+                                   value_offset=1.0,
+                                   *args, **kwargs)
 
         # return self.t
+
+
+
+
+class RandomUniformScaling(ScalingTransform, RandomAffineTransform):
+
+    def __init__(self,
+                 dim: int,
+                 used_dimensions: bool = None,
+                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+                 legacy_random_state: bool = True,
+
+                 *args, **kwargs):
+
+        super(RandomUniformScaling, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+
+
+
+    def get_random_transform(
+            self,
+            min_scaling: Union[int, float, np.int_, np.float_, np.ndarray] = None,
+            max_scaling: Union[int, float, np.int_, np.float_, np.ndarray] = None,
+            transformation_dict: dict = None,
+            *args, **kwargs):
+
+
+        self.transform = self._get_random_transform(min_scaling, max_scaling,
+                                                    transform_dict=transformation_dict,
+                                                    value_offset=1.0,
+                                                    uniform=True,
+                                                    *args, **kwargs)
+
+        # return self.t
+
+
+
 
 

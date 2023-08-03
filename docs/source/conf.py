@@ -37,7 +37,7 @@ autodoc_typehints = "description"
 intersphinx_mapping = {
     'python': ('https://docs.python.org/', None),
     'numpy': ('http://docs.scipy.org/doc/numpy', None),
-    'SimpleITK' : ('https://simpleitk.readthedocs.io/en/master/', None),
+    'SimpleITK': ('https://simpleitk.readthedocs.io/en/master/', None),
 }
 
 
