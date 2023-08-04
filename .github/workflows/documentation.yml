@@ -2,9 +2,8 @@ name: documentation
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
+    tags:
+      - '*'
   workflow_dispatch:
   
   
