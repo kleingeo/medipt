@@ -1,9 +1,9 @@
 from typing import Union, Tuple, List
 import SimpleITK as sitk
 import numpy as np
-from ...utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
 from ...utils import random_uniform_float
-from ...utils import gaussian_blur, gaussian_noise
+from .intensity_utils_np import gaussian_noise_np
+from .intensity_utils_sitk import gaussian_noise_sitk
 
 
 class GaussianNoise:
@@ -16,10 +16,17 @@ class GaussianNoise:
         self.mean = mean
 
     def __call__(self,
-                 image: sitk.Image,
-                 *args, **kwargs) -> sitk.Image:
+                 image: Union[np.ndarray, sitk.Image],
+                 *args, **kwargs) -> Union[np.ndarray, sitk.Image]:
 
-        return gaussian_noise(image, self.mean, self.sigma, *args, **kwargs)
+        if isinstance(image, np.ndarray):
+            return gaussian_noise_np(image, self.mean, self.sigma, *args, **kwargs)
+
+        elif isinstance(image, sitk.Image):
+            return gaussian_noise_sitk(image, self.mean, self.sigma, *args, **kwargs)
+
+        else:
+            raise ImportError("image must be either a numpy array or a SimpleITK image.")
 
 
 class RandomGaussianNoise:
@@ -49,8 +56,8 @@ class RandomGaussianNoise:
         self.legacy_random_state = legacy_random_state
 
     def __call__(self,
-                 image: sitk.Image,
-                 *args, **kwargs) -> sitk.Image:
+                 image: Union[np.ndarray, sitk.Image],
+                 *args, **kwargs) -> Union[np.ndarray, sitk.Image]:
 
 
 
@@ -84,8 +91,13 @@ class RandomGaussianNoise:
             sigma = self.sigma
 
 
+        if isinstance(image, np.ndarray):
+            return gaussian_noise_np(image, mean, sigma, *args, **kwargs)
 
-        return gaussian_noise(image, mean, sigma, *args, **kwargs)
+        elif isinstance(image, sitk.Image):
+            return gaussian_noise_sitk(image, mean, sigma, *args, **kwargs)
 
+        else:
+            raise ImportError("image must be either a numpy array or a SimpleITK image.")
 
 

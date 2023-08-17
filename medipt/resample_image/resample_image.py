@@ -42,6 +42,58 @@ def get_sitk_interpolator(interpolator):
 
 
 
+def get_simpleitk_pix_type(pixel_type: Union[str, int]) -> int:
+    """
+        Returns the SimpleITK pixel type for the given pixel type string.
+        :param pixel_type: The pixel type as string.
+                           'float32': sitk.sitkFloat32
+                           'float64': sitk.sitkFloat64
+                           'int8': sitk.sitkInt8
+                           'int16': sitk.sitkInt16
+                           'int32': sitk.sitkInt32
+                           'int64': sitk.sitkInt64
+                           'uint8': sitk.sitkUInt8
+                           'uint16': sitk.sitkUInt16
+                           'uint32': sitk.sitkUInt32
+                           'uint64': sitk.sitkUInt64
+                           'complex64': sitk.sitkComplexFloat32
+                           'complex128': sitk.sitkComplexFloat64
+        :return: The SimpleITK pixel type.
+        """
+
+    if isinstance(pixel_type, str):
+
+        if pixel_type == 'float32':
+            return sitk.sitkFloat32
+        elif pixel_type == 'float64':
+            return sitk.sitkFloat64
+        elif pixel_type == 'int8':
+            return sitk.sitkInt8
+        elif pixel_type == 'int16':
+            return sitk.sitkInt16
+        elif pixel_type == 'int32':
+            return sitk.sitkInt32
+        elif pixel_type == 'int64':
+            return sitk.sitkInt64
+        elif pixel_type == 'uint8':
+            return sitk.sitkUInt8
+        elif pixel_type == 'uint16':
+            return sitk.sitkUInt16
+        elif pixel_type == 'uint32':
+            return sitk.sitkUInt32
+        elif pixel_type == 'uint64':
+            return sitk.sitkUInt64
+        elif pixel_type == 'complex64':
+            return sitk.sitkComplexFloat32
+        elif pixel_type == 'complex128':
+            return sitk.sitkComplexFloat64
+
+    elif isinstance(pixel_type, int):
+        return pixel_type
+
+    else:
+        raise Exception('invalid pixel type')
+
 
 class ResampleImage:
     def __init__(self,
@@ -51,7 +103,7 @@ class ResampleImage:
 
                  post_processing_sitk: Union[Callable, Union[List[Callable]], Tuple[Callable, ...]] = None,
 
-                 np_pixel_type: Union[str, type] = np.float32,
+                 pixel_type: [str, int] = 'float32',
                  default_pixel_value: Union[float, int, None] = None,
 
                  dim: int = 3,
@@ -71,7 +123,7 @@ class ResampleImage:
 
         self.interpolator = interpolator
         self.post_processing_sitk = post_processing_sitk
-        self.np_pixel_type = np_pixel_type
+        self.pixel_type = pixel_type
         self.default_pixel_value = default_pixel_value
 
 
@@ -123,6 +175,10 @@ class ResampleImage:
             resample_filter.SetTransform(transform)
 
         resample_filter.SetInterpolator(sitk_interpolator)
+
+        if self.pixel_type is not None:
+            sitk_pix_type = get_simpleitk_pix_type(self.pixel_type)
+            resample_filter.SetOutputPixelType(sitk_pix_type)
 
         resampled_image = resample_filter.Execute(image)
 

@@ -1,16 +1,10 @@
 from typing import Union, Tuple, List
-import SimpleITK as sitk
 import numpy as np
-from ...utils import min_max_intensity, clamp_intensity, shift_scale_intensity, rescale_intensity
-
-# from .spatial_transform import SpatialTransform
-# from .random_affine_transform import RandomAffineTransform
+from .intensity_utils_np import clamp_intensity_np
+from .intensity_utils_sitk import clamp_intensity_sitk
 
 
-
-
-
-def rescale_clamp_intensity(image: sitk.Image,
+def rescale_clamp_intensity(image: np.ndarray,
                             new_min: Union[int, float] = None,
                             new_max: Union[int, float] = None,
                             window_min: Union[int, float] = None,
@@ -22,32 +16,20 @@ def rescale_clamp_intensity(image: sitk.Image,
                             *args, **kwargs):
 
 
-    input_image_min_max = min_max_intensity(image)
     output_image = image
+
+    image_min = image.min()
+    image_max = image.max()
 
 
     if (window_min is not None) or (window_max is not None):
 
-        output_image = clamp_intensity(output_image,
-                                       window_min=window_min,
-                                       window_max=window_max,
-                                       image_min=input_image_min_max[0],
-                                       image_max=input_image_min_max[1],
-                                       *args, **kwargs)
-
-
-
-
-    a = sitk.ShiftScale(output_image, shift=-1024, scale=1/2048)
-
-
-    # sitk.WriteImage(a, 'hold.nii.gz')
-
-
-    a_image_min_max = min_max_intensity(a)
-
-    b = 1
-
+        output_image = clamp_intensity_np(output_image,
+                                            window_min=window_min,
+                                            window_max=window_max,
+                                            image_min=image_min,
+                                            image_max=image_max,
+                                            *args, **kwargs)
 
 
 
@@ -55,14 +37,14 @@ def rescale_clamp_intensity(image: sitk.Image,
     if (new_min is not None) or (new_max is not None):
 
         if new_min is None:
-            new_min = window_min if window_min is not None else input_image_min_max[0]
+            new_min = window_min if window_min is not None else image_min
 
         if new_max is None:
-            new_max = window_max if window_max is not None else input_image_min_max[1]
+            new_max = window_max if window_max is not None else image_max
 
 
-        current_min = window_min if window_min is not None else input_image_min_max[0]
-        current_max = window_max if window_max is not None else input_image_min_max[1]
+        current_min = window_min if window_min is not None else image_min
+        current_max = window_max if window_max is not None else image_max
 
         intens_scaling = (new_max - new_min) / (current_max - current_min)
         shift = new_min - intens_scaling * current_min
@@ -76,12 +58,8 @@ def rescale_clamp_intensity(image: sitk.Image,
     if (shift is None) or (scale is None):
 
 
-
-
-        current_min_max_filter = sitk.MinimumMaximumImageFilter()
-        current_min_max_filter.Execute(image)
-        current_min = current_min_max_filter.GetMinimum()
-        current_max = current_min_max_filter.GetMaximum()
+        current_min = image.min()
+        current_max = image.max()
 
 
         scale = (new_max - new_min) / (current_max - current_min)
@@ -124,7 +102,7 @@ class RescaleClampIntensity:
 
 
     def rescale_intensity(self,
-                          image: sitk.Image,
+                          image: np.ndarray,
                           *args, **kwargs):
 
 

@@ -32,25 +32,6 @@ class FlippingTransform(SpatialTransform):
 
 
 
-
-
-
-        # if isinstance(flip_axes, (tuple, list, np.ndarray)):
-        #
-        #     if len(flip_axes) == 1:
-        #         current_flip_axes = [flip_axes] * self.dim
-        #
-        #     else:
-        #         assert len(flip_axes) == self.dim, f'flip axes must be a tuple or list of length {self.dim}.'
-        #
-        #         current_flip_axes = [flip_axes]
-        #
-        # elif isinstance(flip_axes, (int, float, np.ndarray)):
-        #     current_flip_axes = [flip_axes] * self.dim
-        #
-        # else:
-        #     raise ValueError('flip axes must be tuples, lists, or numbers.')
-
         self.transform = sitk.AffineTransform(self.dim)
 
         scale_factors = [-1.0 if f else 1.0 for f in current_flip_axes]
@@ -109,10 +90,4 @@ class RandomFlipping(FlippingTransform):
         else:
             raise ValueError('flip axes must be tuples, lists, or numbers.')
 
-
-
-        self.transform = sitk.AffineTransform(self.dim)
-
-        scale_factors = [-1.0 if f else 1.0 for f in current_flip_axes]
-
-        self.transform.Scale(scale_factors)
+        self._get_transform(current_flip_axes, *args, **kwargs)

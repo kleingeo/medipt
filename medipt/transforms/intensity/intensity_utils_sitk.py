@@ -3,8 +3,8 @@ import numpy as np
 from typing import Union, Tuple, List
 
 
-def min_max_intensity(image: sitk.Image,
-                      *args, **kwargs) -> Tuple[float, float]:
+def min_max_intensity_sitk(image: sitk.Image,
+                           *args, **kwargs) -> Tuple[float, float]:
 
     min_max_filter = sitk.MinimumMaximumImageFilter()
     min_max_filter.Execute(image)
@@ -16,19 +16,19 @@ def min_max_intensity(image: sitk.Image,
 
 
 
-def clamp_intensity(image: sitk.Image,
-                    window_min: Union[int, float] = None,
-                    window_max: Union[int, float] = None,
-                    image_min: Union[int, float] = None,
-                    image_max: Union[int, float] = None,
-                    *args, **kwargs) -> sitk.Image:
+def clamp_intensity_sitk(image: sitk.Image,
+                         window_min: Union[int, float] = None,
+                         window_max: Union[int, float] = None,
+                         image_min: Union[int, float] = None,
+                         image_max: Union[int, float] = None,
+                         *args, **kwargs) -> sitk.Image:
 
 
     if (window_min is None) and (window_max is None):
         raise ValueError('window_min and window_max cannot both be None.')
 
     if image_min is None or image_max is None:
-        image_min_max = min_max_intensity(image)
+        image_min_max = min_max_intensity_sitk(image)
 
         if image_min is None:
             image_min = image_min_max[0]
@@ -51,10 +51,10 @@ def clamp_intensity(image: sitk.Image,
 
 
 
-def shift_scale_intensity(image: sitk.Image,
-                          shift: Union[int, float] = None,
-                          scale: Union[int, float] = None,
-                          *args, **kwargs) -> sitk.Image:
+def shift_scale_intensity_sitk(image: sitk.Image,
+                               shift: Union[int, float] = None,
+                               scale: Union[int, float] = None,
+                               *args, **kwargs) -> sitk.Image:
 
     shift_scale_filter = sitk.ShiftScaleImageFilter()
     shift_scale_filter.SetShift(shift)
@@ -64,13 +64,13 @@ def shift_scale_intensity(image: sitk.Image,
     return shifted_scaled_image
 
 
-def rescale_intensity(image: sitk.Image,
-                      new_min: Union[int, float] = None,
-                      new_max: Union[int, float] = None,
-                      *args, **kwargs) -> sitk.Image:
+def rescale_intensity_sitk(image: sitk.Image,
+                           new_min: Union[int, float] = None,
+                           new_max: Union[int, float] = None,
+                           *args, **kwargs) -> sitk.Image:
 
     if (new_min is None) or (new_max is None):
-        image_min_max = min_max_intensity(image)
+        image_min_max = min_max_intensity_sitk(image)
 
         if new_min is None:
             new_min = image_min_max[0]
@@ -88,9 +88,9 @@ def rescale_intensity(image: sitk.Image,
 
 
 
-def gaussian_blur(image: sitk.Image,
-                  sigma: Union[int, float],
-                  *args, **kwargs) -> sitk.Image:
+def gaussian_blur_sitk(image: sitk.Image,
+                       sigma: Union[int, float],
+                       *args, **kwargs) -> sitk.Image:
 
     image_default_pixel_type = image.GetPixelID()
 
@@ -110,10 +110,10 @@ def gaussian_blur(image: sitk.Image,
 
 
 
-def gaussian_noise(image: sitk.Image,
-                   mean: Union[int, float],
-                   sigma: Union[int, float],
-                   *args, **kwargs) -> sitk.Image:
+def gaussian_noise_sitk(image: sitk.Image,
+                        mean: Union[int, float],
+                        sigma: Union[int, float],
+                        *args, **kwargs) -> sitk.Image:
 
     image_default_pixel_type = image.GetPixelID()
 
