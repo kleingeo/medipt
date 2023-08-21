@@ -60,8 +60,8 @@ jobs:
       matrix:
         # GitHub Actions doesn't support pairing matrix values together, let's improvise
         # https://github.com/github/feedback/discussions/7835#discussioncomment-1769026
-        buildplat: [ubuntu-latest]
-        python: ["3.9", "3.10"]
+        buildplat: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -112,7 +112,7 @@ jobs:
       # Python version used to build sdist doesn't matter
       # wheel will be built from sdist with the correct version
       - name: Unzip sdist (macOS)
-        if: ${{ matrix.buildplat[0] == 'macosx_*' }}
+        if: ${{ matrix.buildplat[0] == 'macos_*' }}
         run: |
           tar -xzf ./dist/${{ env.sdist_name }} -C ./dist
 
@@ -168,13 +168,6 @@ jobs:
 #          package-dir: ./dist/${{ matrix.buildplat[1] == 'macosx_*' && env.sdist_name || needs.build_sdist.outputs.sdist_file }}
         run: python -m build --wheel --outdir ./dist
         shell: bash -el {0}
-
-
-
-
-      - name: Validate wheel RECORD
-        shell: bash -el {0}
-        run: for whl in $(ls wheelhouse); do wheel unpack wheelhouse/$whl -d /tmp; done
 
 
 #      - uses: actions/upload-artifact@v3
