@@ -1,0 +1,12 @@
+name: anaconda-client-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - anaconda-client
+  - pip
+  - build
+  - conda-build
+  - wheel
+  - setuptools
+  - setuptools-git-versioning

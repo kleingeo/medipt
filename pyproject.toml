@@ -1,10 +1,18 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "setuptools-git-versioning<2",
+]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
 
 [project]
 name="medipt"
-version="0.0.4"
+#version="0.0.4"
+
 authors=[
     {name="Geoff Klein"},
 ]
@@ -12,7 +20,7 @@ license={text="BSD 3-Clause"}
 description="Stuff"
 readme="README.md"
 requires-python=">=3.7"
-dynamic = ["dependencies"]
+dynamic = ["dependencies", "version"]
 keywords=[
     "medical-imaging",
 ]

@@ -1,0 +1,39 @@
+package:
+  name: medipt
+#  version: 0.0.4
+  version: {{ environ.get('PKG_VERSION', '') }}
+
+source:
+    path: ../
+#    path: ../dist/medipt-0.0.3.tar.gz
+
+build:
+    number: 0
+#    noarch: python
+#    script: python -m pip install --no-deps --ignore-installed .
+#    script: {{ PYTHON }} -m pip install .
+    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+#    script: |
+#      {{ PYTHON }} -m build --sdist --wheel --outdir dist/.
+#      {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+
+
+requirements:
+  build:
+#    - wheel
+    - numpy
+    - SimpleITK
+
+  host:
+    - python
+    - setuptools
+    - pip
+
+  run:
+    - python >=3.7
+    - numpy >=1.24.0
+    - SimpleITK >=2.2.0
+    - scipy >=1.6.0
+
+#outputs:
+#  - type: wheel

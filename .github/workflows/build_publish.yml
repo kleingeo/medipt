@@ -1,9 +1,9 @@
 name: Publish to PyPI
 
 on:
-  push:
-    tags:
-      - '*'
+#  push:
+#    tags:
+#      - '*'
   workflow_dispatch:
   
 jobs:
@@ -25,7 +25,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: python3 -m pip install --user --upgrade pip build twine setuptools
+        run: python3 -m pip install --user --upgrade pip build twine setuptools setuptools-git-versioning
         shell: bash
 
       - name: Build wheel
