@@ -1,7 +1,8 @@
 package:
   name: medipt
 #  version: 0.0.4
-  version: {{ environ.get('PKG_VERSION') }}
+  version: {{ environ["PACKAGE_VERSION"] }}
+
 
 source:
     path: ../
@@ -13,6 +14,8 @@ build:
 #    script: python -m pip install --no-deps --ignore-installed .
 #    script: {{ PYTHON }} -m pip install .
     script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+#    script_env:
+#      - VERSION
 
 #    script: |
 #      {{ PYTHON }} -m build --sdist --wheel --outdir dist/.
