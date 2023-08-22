@@ -12,56 +12,56 @@ on:
 
 
 jobs:
-#  build_sdist:
-#    name: Build sdist
-#    runs-on: ubuntu-22.04
-#    env:
-#      IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
-#      IS_WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
-##      IS_SCHEDULE_DISPATCH: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
-#    outputs:
-#      sdist_file: ${{ steps.save-path.outputs.sdist_name }}
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#
-#
-#      - name: Get Tag
-#        run: |
-#          TAG=${{ github.ref_name }}
-#          echo "PACKAGE_VERSION=${TAG#v}" >> $GITHUB_ENV
-#        shell: bash -el {0}
-#
-#      - name: Test tag
-#        run: echo $PACKAGE_VERSION
-#        shell: bash -el {0}
-#
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: '3.11'
-#
-#      - name: Build sdist
-#        run: |
-#          python -m pip install build
-#          python -m build --sdist
-#
-#      - uses: actions/upload-artifact@v3
-#        with:
-#          name: sdist
-#          path: ./dist/*
-#
-#      - name: Sanity check sdist files
-#        run: |
-#          ls ./dist
-#
-#      - name: Output sdist name
-#        id: save-path
-#        shell: bash -el {0}
-#        run: echo "sdist_name=$(ls ./dist)" >> "$GITHUB_OUTPUT"
+  build_sdist:
+    name: Build sdist
+    runs-on: ubuntu-22.04
+    env:
+      IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+      IS_WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
+#      IS_SCHEDULE_DISPATCH: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    outputs:
+      sdist_file: ${{ steps.save-path.outputs.sdist_name }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+
+      - name: Get Tag
+        run: |
+          TAG=${{ github.ref_name }}
+          echo "PACKAGE_VERSION=${TAG#v}" >> $GITHUB_ENV
+        shell: bash -el {0}
+
+      - name: Test tag
+        run: echo $PACKAGE_VERSION
+        shell: bash -el {0}
+
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Build sdist
+        run: |
+          python -m pip install build
+          python -m build --sdist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: sdist
+          path: ./dist/*
+
+      - name: Sanity check sdist files
+        run: |
+          ls ./dist
+
+      - name: Output sdist name
+        id: save-path
+        shell: bash -el {0}
+        run: echo "sdist_name=$(ls ./dist)" >> "$GITHUB_OUTPUT"
 
   build_wheels:
 #    needs: build_sdist
@@ -104,35 +104,35 @@ jobs:
         run: echo $PACKAGE_VERSION
         shell: bash -el {0}
 
-#      # TODO: Build wheels from sdist again
-#      # There's some sort of weird race condition?
-#      # within Github that makes the sdist be missing files
-#
-#      # We need to build wheels from the sdist since the sdist
-#      # removes unnecessary files from the release
-#      - name: Download sdist (not macOS)
-#        if: ${{ matrix.buildplat[0] != 'macos_*' }}
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: sdist
-#          path: ./dist
-#
-#      - name: Output sdist name (macOS)
-#        id: save-path
-#        shell: bash -el {0}
-#        run: echo "sdist_name=$(ls ./dist)" >> "$GITHUB_ENV"
-#
-#      # Python version used to build sdist doesn't matter
-#      # wheel will be built from sdist with the correct version
-#      - name: Unzip sdist (macOS)
-#        if: ${{ matrix.buildplat[0] == 'macos_*' }}
-#        run: |
-#          tar -xzf ./dist/${{ env.sdist_name }} -C ./dist
-#
-#      - name: Output sdist name (macOS)
-#        id: save-path2
-#        shell: bash -el {0}
-#        run: echo "sdist_name=$(cd ./dist && ls -d */)" >> "$GITHUB_ENV"
+      # TODO: Build wheels from sdist again
+      # There's some sort of weird race condition?
+      # within Github that makes the sdist be missing files
+
+      # We need to build wheels from the sdist since the sdist
+      # removes unnecessary files from the release
+      - name: Download sdist (not macOS)
+        if: ${{ matrix.buildplat[0] != 'macos_*' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: sdist
+          path: ./dist
+
+      - name: Output sdist name (macOS)
+        id: save-path
+        shell: bash -el {0}
+        run: echo "sdist_name=$(ls ./dist)" >> "$GITHUB_ENV"
+
+      # Python version used to build sdist doesn't matter
+      # wheel will be built from sdist with the correct version
+      - name: Unzip sdist (macOS)
+        if: ${{ matrix.buildplat[0] == 'macos_*' }}
+        run: |
+          tar -xzf ./dist/${{ env.sdist_name }} -C ./dist
+
+      - name: Output sdist name (macOS)
+        id: save-path2
+        shell: bash -el {0}
+        run: echo "sdist_name=$(cd ./dist && ls -d */)" >> "$GITHUB_ENV"
 
       - name: Set up Python
         uses: mamba-org/setup-micromamba@v1
@@ -165,11 +165,11 @@ jobs:
 #          CIBW_BUILD: ${{ matrix.python[0] }}-${{ matrix.buildplat[1] }}
 #          CIBW_BUILD_VERBOSITY: 1
 
-#      - name: Build wheels
-##        with:
-##          package-dir: ./dist/${{ matrix.buildplat[1] == 'macosx_*' && env.sdist_name || needs.build_sdist.outputs.sdist_file }}
-#        run: python -m build --wheel --outdir ./dist
-#        shell: bash -el {0}
+      - name: Build wheels
+#        with:
+#          package-dir: ./dist/${{ matrix.buildplat[1] == 'macosx_*' && env.sdist_name || needs.build_sdist.outputs.sdist_file }}
+        run: python -m build --wheel --outdir ./dist
+        shell: bash -el {0}
 
 
 #      - uses: actions/upload-artifact@v3
@@ -199,7 +199,7 @@ jobs:
 
       - name: Build and upload conda package
         if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
-        run: conda build --token ${{ secrets.ANACONDA_TOKEN_MEDIPT }} ./conda
+        run: conda build --token ${{ secrets.ANACONDA_TOKEN_MEDIPT }} ./conda -c simpleitk -c conda-forge
         shell: bash -el {0}
 
 
