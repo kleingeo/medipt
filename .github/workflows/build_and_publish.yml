@@ -72,10 +72,10 @@ jobs:
       matrix:
         # GitHub Actions doesn't support pairing matrix values together, let's improvise
         # https://github.com/github/feedback/discussions/7835#discussioncomment-1769026
-        buildplat: [ubuntu-latest, windows-latest, macos-latest, manylinux2014_aarch64]
-        python: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
-#        buildplat: [ubuntu-latest]
-#        python: ["3.7"]
+#        buildplat: [ubuntu-latest, windows-latest, macos-latest]
+#        python: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        buildplat: [ubuntu-latest]
+        python: ["3.10"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -134,26 +134,44 @@ jobs:
 #        shell: bash -el {0}
 #        run: echo "sdist_name=$(cd ./dist && ls -d */)" >> "$GITHUB_ENV"
 
+#      - name: Set up Python
+#        uses: mamba-org/setup-micromamba@v1
+#        with:
+#          environment-name: wheel-env
+#          create-args: >-
+#            python=${{ matrix.python }}
+#            anaconda-client
+#            wheel
+#            setuptools
+#            setuptools-git-versioning
+#            build
+#            conda-build
+#            twine
+#          condarc: |
+#            channels:
+#              - simpleitk
+#              - conda-forge
+#              - defaults
+#          cache-downloads: true
+#          cache-environment: true
+#          init-shell: >-
+#            bash
+#            powershell
+#
+
+
       - name: Set up Python
-        uses: mamba-org/setup-micromamba@v1
+        uses: conda-incubator/setup-miniconda@v2
         with:
-          environment-name: wheel-env
-          create-args: >-
-            python=${{ matrix.python }}
-            anaconda-client
-            wheel
-            setuptools
-            setuptools-git-versioning
-            build
-            conda-build
-            twine
-          cache-downloads: true
-          cache-environment: true
-          init-shell: >-
-            bash
-            powershell
+          auto-update-conda: true
+          python-version: ${{ matrix.python }}
+          activate-environment: wheel-env
+          channels: simpleitk,conda-forge,defaults
 
-
+      - name: Install dependencies
+        run: |
+          conda install anaconda-client wheel setuptools setuptools-git-versioning build conda-build twine
+        shell: bash -el {0}
 
 
 #      - name: Build wheels
@@ -199,7 +217,7 @@ jobs:
 
       - name: Build and upload conda package
         if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
-        run: conda build --token ${{ secrets.ANACONDA_TOKEN_MEDIPT }} ./conda -c simpleitk -c conda-forge
+        run: conda build --token ${{ secrets.ANACONDA_TOKEN_MEDIPT }} ./conda
         shell: bash -el {0}
 
 

@@ -32,6 +32,11 @@ requirements:
     - python
     - setuptools
     - pip
+#    - libtiff
+#    - libpng
+#    - jpeg
+#    - zlib
+#    - tbb-devel
 
   run:
     - python >=3.7
@@ -41,3 +46,10 @@ requirements:
 
 #outputs:
 #  - type: wheel
+
+
+
+about:
+  home: https://github.com/kleingeo/ImageProcessingTools
+  license: BSD 3-Clause
+  summary: Medical Imaging Processing Tools
