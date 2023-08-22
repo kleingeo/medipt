@@ -27,11 +27,15 @@ requirements:
 #    - wheel
     - numpy
     - SimpleITK
+    - scipy
 
   host:
-    - python
+    - python >=3.7
     - setuptools
     - pip
+    - SimpleITK >=2.2.0
+    - numpy >=1.20.0
+    - scipy >=1.6.0
 #    - libtiff
 #    - libpng
 #    - jpeg
@@ -52,4 +56,5 @@ requirements:
 about:
   home: https://github.com/kleingeo/ImageProcessingTools
   license: BSD 3-Clause
+  license_file: LICENSE
   summary: Medical Imaging Processing Tools
