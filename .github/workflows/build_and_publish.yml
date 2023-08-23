@@ -236,8 +236,6 @@ jobs:
         shell: bash -el {0}
 
 
-
-#
       - name: Upload conda package
         if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
         run: |
