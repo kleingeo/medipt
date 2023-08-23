@@ -175,6 +175,7 @@ jobs:
           activate-environment: wheel-env
           channels: defaults,conda-forge,simpleitk
 
+
       - name: Install dependencies
         run: |
           conda install anaconda-client wheel setuptools setuptools-git-versioning build conda-build twine
@@ -235,15 +236,16 @@ jobs:
         run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python }} ./conda
         shell: bash -el {0}
 
-      - name: Upload conda package
-        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
-        run: |
-#          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}-${{ matrix.os }}/*/*.tar.bz2
 
-          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}/*/*.tar.bz2
-          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.tar.gz
-          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.whl
-        shell: bash -el {0}
+#      - name: Upload conda package
+#        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
+#        run: |
+##          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}-${{ matrix.os }}/*/*.tar.bz2
+#
+#          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}/*/*.tar.bz2
+#          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.tar.gz
+#          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.whl
+#        shell: bash -el {0}
 
 
 
