@@ -162,7 +162,7 @@ jobs:
 
 
       - name: Set Python Version
-        run: echo "PYTHON_VERSION=${{ matrix.python }}"
+        run: echo "PYTHON_VERSION=${{ matrix.python }}" >> $GITHUB_ENV
         shell: bash -el {0}
 
       - name: Set up Python
