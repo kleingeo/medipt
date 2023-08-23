@@ -8,7 +8,7 @@ on:
     tags:
       - '*'
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 
