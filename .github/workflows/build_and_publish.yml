@@ -7,6 +7,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - master
   workflow_dispatch:
 
 
@@ -64,18 +66,17 @@ jobs:
 #        run: echo "sdist_name=$(ls ./dist)" >> "$GITHUB_OUTPUT"
 
   build_wheels:
-#    needs: build_sdist
-    name: Build wheel for ${{ matrix.python }}-${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Build wheel for ${{ matrix.python[1] }}-${{ matrix.os[0] }}
+    runs-on: ${{ matrix.os[0] }}
     strategy:
       fail-fast: false
       matrix:
-        # GitHub Actions doesn't support pairing matrix values together, let's improvise
-        # https://github.com/github/feedback/discussions/7835#discussioncomment-1769026
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ["3.7", "3.8", "3.9", "3.10", "3.11"]
-#        os: [ubuntu-latest]
-#        python: ["3.10"]
+#        os: [ubuntu-latest, windows-latest, macos-latest]
+#        python: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        os:
+          - [ubuntu-latest, manylinux_x86_64]
+        python:
+          - ["3.7", "cp37"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -103,6 +104,7 @@ jobs:
       - name: Test tag
         run: echo $PACKAGE_VERSION
         shell: bash -el {0}
+
 
 #      # TODO: Build wheels from sdist again
 #      # There's some sort of weird race condition?
@@ -139,7 +141,7 @@ jobs:
 #        with:
 #          environment-name: wheel-env
 #          create-args: >-
-#            python=${{ matrix.python }}
+#            python=${{ matrix.python[0] }}
 #            anaconda-client
 #            wheel
 #            setuptools
@@ -157,16 +159,16 @@ jobs:
 #          init-shell: >-
 #            bash
 #            powershell
-#
+
 
 
       - name: Set up Python
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.python[0] }}
           activate-environment: wheel-env
-#          channels: simpleitk,conda-forge,defaults
+          channels: simpleitk,conda-forge,defaults
 
       - name: Install dependencies
         run: |
@@ -174,25 +176,33 @@ jobs:
         shell: bash -el {0}
 
 
-#      - name: Build wheels
-#        uses: pypa/cibuildwheel@v2.15.0
-#        with:
-#         package-dir: ./dist/${{ matrix.buildplat[1] == 'macosx_*' && env.sdist_name || needs.build_sdist.outputs.sdist_file }}
-#        env:
-#          CIBW_PRERELEASE_PYTHONS: True
-#          CIBW_BUILD: ${{ matrix.python[0] }}-${{ matrix.buildplat[1] }}
-#          CIBW_BUILD_VERBOSITY: 1
+      - name: Set Python Version
+        run: echo "PYTHON_VERSION=${{ matrix.python[0] }}" >> $GITHUB_ENV
+        shell: bash -el {0}
+
+      - name: Build sdist
+        run: |
+          python -m build --sdist --outdir ./dist/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}
+        shell: bash -el {0}
+
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.15.0
+        with:
+         package-dir: ./dist/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}
+        env:
+          CIBW_PRERELEASE_PYTHONS: True
+          CIBW_BUILD: ${{ matrix.python[1] }}-${{ matrix.os[1] }}
+          CIBW_BUILD_VERBOSITY: 1
 
 #      - name: Build wheels
-##        with:
-##          package-dir: ./dist/${{ matrix.buildplat[1] == 'macosx_*' && env.sdist_name || needs.build_sdist.outputs.sdist_file }}
-#        run: python -m build --wheel --outdir ./dist
+#        run: python -m build --wheel --outdir ./dist/py-${{ matrix.python }}-${{ matrix.os }}
 #        shell: bash -el {0}
 
 
 #      - uses: actions/upload-artifact@v3
 #        with:
-#          name: ${{ matrix.python }}-${{ startsWith(matrix.buildplat[0], 'macosx') && 'macosx' || matrix.buildplat[0] }}
+#          name: ${{ matrix.python }}-${{ startsWith(matrix.os, 'macosx') && 'macos' || matrix.os }}
 #          path: ./wheelhouse/*.whl
 
 
@@ -215,20 +225,28 @@ jobs:
 #          upload_wheels
 
 
-      - name: Build Conda Package
-        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
-#        run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python }}-${{ matrix.os }} ./conda
-        run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python }}-${{ matrix.os }} ./conda
-        shell: bash -el {0}
 
-      - name: Upload conda package
-        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
-        run: anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}-${{ matrix.os }}/*/*.tar.bz2
-        shell: bash -el {0}
+
+#      - name: Build Conda Package
+#        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
+##        run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python[1] }}-${{ matrix.os[0] }} ./conda
+#        run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python[1] }}-${{ matrix.os[0] }} ./conda
+#        shell: bash -el {0}
+
+
+
+#
+#      - name: Upload conda package
+#        if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
+#        run: anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}/*/*.tar.bz2
+#        shell: bash -el {0}
+
+
+
 
 #      - name: Publish to PyPI
 #        if: startsWith(github.ref, 'refs/tags/v') || contains(github.ref, 'refs/tags/v*')
 #        uses: pypa/gh-action-pypi-publish@release/v1
 #        with:
 #          password: ${{ secrets.PYPI_API_TOKEN }}
-#          packages-dir: ./dist
+#          packages-dir: ./dist/py-${{ matrix.python }}-${{ matrix.os }}
