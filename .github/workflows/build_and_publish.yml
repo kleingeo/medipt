@@ -160,7 +160,7 @@ jobs:
             bash
             powershell
 
-
+#        - name: Install dependencies
 
 #      - name: Set up Python
 #        uses: conda-incubator/setup-miniconda@v2
