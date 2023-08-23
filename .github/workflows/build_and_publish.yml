@@ -68,7 +68,7 @@ jobs:
   build_wheels:
     name: Build wheel for ${{ matrix.python }}-${{ matrix.os }}
 #    runs-on: ${{ matrix.os[0] }}
-    runs-on: ${{ ubuntu-latest }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
