@@ -11,7 +11,8 @@ source:
 
 build:
     number: 0
-#    noarch: python
+    string: py{{ environ.get('PYTHON_VERSION').replace('.', '') }}_{{ 0.1 }}
+    noarch: python
 #    script: python -m pip install --no-deps --ignore-installed .
 #    script: {{ PYTHON }} -m pip install .
 #    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
