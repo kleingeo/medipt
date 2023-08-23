@@ -113,7 +113,6 @@ jobs:
 #      # We need to build wheels from the sdist since the sdist
 #      # removes unnecessary files from the release
 #      - name: Download sdist (not macOS)
-#        if: ${{ matrix.buildplat != 'macos_*' }}
 #        uses: actions/download-artifact@v3
 #        with:
 #          name: sdist
@@ -189,7 +188,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.15.0
         with:
-         package-dir: ./dist/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}
+         package-dir: ./dist/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}/*
         env:
           CIBW_PRERELEASE_PYTHONS: True
           CIBW_BUILD: ${{ matrix.python[1] }}-${{ matrix.os[1] }}
