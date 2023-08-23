@@ -17,7 +17,7 @@ authors=[
     {name="Geoff Klein"},
 ]
 license={text="BSD 3-Clause"}
-description="Stuff"
+description="Medical Imaging Processing Tools"
 readme="README.md"
 requires-python=">=3.7"
 dynamic = ["dependencies", "version"]

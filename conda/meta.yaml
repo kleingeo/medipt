@@ -36,11 +36,6 @@ requirements:
     - SimpleITK >=2.2.0
     - numpy >=1.20.0
     - scipy >=1.6.0
-#    - libtiff
-#    - libpng
-#    - jpeg
-#    - zlib
-#    - tbb-devel
 
   run:
     - python >=3.7
@@ -50,6 +45,12 @@ requirements:
 
 #outputs:
 #  - type: wheel
+
+
+test:
+  imports:
+    - medipt
+    - SimpleITK
 
 
 
