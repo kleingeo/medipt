@@ -235,7 +235,6 @@ jobs:
         run: conda build -c conda-forge -c SimpleITK --output-folder ./conda-bld/py-${{ matrix.python }} ./conda
         shell: bash -el {0}
 
-
       - name: Upload conda package
         if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
         run: |
