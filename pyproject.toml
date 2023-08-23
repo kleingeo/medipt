@@ -2,16 +2,16 @@
 requires = [
     "setuptools>=61.0",
     "wheel",
-    "setuptools-git-versioning<2",
+#    "setuptools-git-versioning<2",
 ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools-git-versioning]
-enabled = true
+#[tool.setuptools-git-versioning]
+#enabled = true
 
 [project]
 name="medipt"
-#version="0.0.4"
+version="0.1"
 
 authors=[
     {name="Geoff Klein"},
@@ -20,8 +20,8 @@ license={text="BSD 3-Clause"}
 description="Medical Imaging Processing Tools"
 readme="README.md"
 requires-python=">=3.7"
-dynamic = ["dependencies", "version"]
-#dynamic = ["dependencies"]
+#dynamic = ["dependencies", "version"]
+dynamic = ["dependencies"]
 keywords=[
     "medical-imaging",
 ]
@@ -34,7 +34,7 @@ keywords=[
 include-package-data = true
 
 [tool.setuptools.packages.find]
-include = ["medipt"]
+include = ["medipt", "medipt.*"]
 namespaces = false
 
 [tool.setuptools.dynamic]
