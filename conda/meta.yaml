@@ -6,14 +6,22 @@ package:
 
 source:
     path: ../
+#    git_url: ../
 #    path: ../dist/medipt-0.0.3.tar.gz
 
 build:
     number: 0
-#    noarch: python
+    noarch: python
 #    script: python -m pip install --no-deps --ignore-installed .
 #    script: {{ PYTHON }} -m pip install .
-    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+#    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .
+#    script: {{ PYTHON }} -m pip install -vv -e .
+#    script: pip install .
+
+    run_exports:
+      - libgcc
+      - libgcc-ng
 #    script_env:
 #      - VERSION
 
@@ -24,10 +32,7 @@ build:
 
 requirements:
   build:
-#    - wheel
-    - numpy
     - SimpleITK
-    - scipy
 
   host:
     - python >=3.7

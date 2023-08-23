@@ -21,12 +21,21 @@ description="Medical Imaging Processing Tools"
 readme="README.md"
 requires-python=">=3.7"
 dynamic = ["dependencies", "version"]
+#dynamic = ["dependencies"]
 keywords=[
     "medical-imaging",
 ]
 
+#[tool.setuptools]
+#packages = ["medipt"]
+
+
 [tool.setuptools]
-packages = ["medipt"]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["medipt"]
+namespaces = false
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
