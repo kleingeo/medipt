@@ -72,7 +72,7 @@ jobs:
       matrix:
         # GitHub Actions doesn't support pairing matrix values together, let's improvise
         # https://github.com/github/feedback/discussions/7835#discussioncomment-1769026
-        buildplat: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python: ["3.7", "3.8", "3.9", "3.10", "3.11"]
 #        os: [ubuntu-latest]
 #        python: ["3.10"]
