@@ -87,7 +87,7 @@ jobs:
 #      IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
 #      IS_SCHEDULE_DISPATCH: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     env:
-      IS_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+      IS_PUSH: ${{ github.event_name == 'push' || startsWith(github.ref, 'refs/tags/v') }}
       IS_WORKFLOW_DISPATCH: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout repository
@@ -136,44 +136,44 @@ jobs:
 #        shell: bash -el {0}
 #        run: echo "sdist_name=$(cd ./dist && ls -d */)" >> "$GITHUB_ENV"
 
-#      - name: Set up Python
-#        uses: mamba-org/setup-micromamba@v1
-#        with:
-#          environment-name: wheel-env
-#          create-args: >-
-#            python=${{ matrix.python[0] }}
-#            anaconda-client
-#            wheel
-#            setuptools
-#            setuptools-git-versioning
-#            build
-#            conda-build
-#            twine
-#          condarc: |
-#            channels:
-#              - simpleitk
-#              - conda-forge
-#              - defaults
-#          cache-downloads: true
-#          cache-environment: true
-#          init-shell: >-
-#            bash
-#            powershell
-
-
-
       - name: Set up Python
-        uses: conda-incubator/setup-miniconda@v2
+        uses: mamba-org/setup-micromamba@v1
         with:
-          auto-update-conda: true
-          python-version: ${{ matrix.python[0] }}
-          activate-environment: wheel-env
-          channels: simpleitk,conda-forge,defaults
+          environment-name: wheel-env
+          create-args: >-
+            python=${{ matrix.python[0] }}
+            anaconda-client
+            wheel
+            setuptools
+            setuptools-git-versioning
+            build
+            conda-build
+            twine
+          condarc: |
+            channels:
+              - defaults
+              - simpleitk
+              - conda-forge
+          cache-downloads: true
+          cache-environment: true
+          init-shell: >-
+            bash
+            powershell
 
-      - name: Install dependencies
-        run: |
-          conda install anaconda-client wheel setuptools setuptools-git-versioning build conda-build twine
-        shell: bash -el {0}
+
+
+#      - name: Set up Python
+#        uses: conda-incubator/setup-miniconda@v2
+#        with:
+#          auto-update-conda: true
+#          python-version: ${{ matrix.python[0] }}
+#          activate-environment: wheel-env
+#          channels: simpleitk,conda-forge,defaults
+#
+#      - name: Install dependencies
+#        run: |
+#          conda install anaconda-client wheel setuptools setuptools-git-versioning build conda-build twine
+#        shell: bash -el {0}
 
 
       - name: Set Python Version
