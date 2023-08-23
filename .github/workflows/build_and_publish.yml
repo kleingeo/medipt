@@ -77,7 +77,7 @@ jobs:
 
 #        os:
 #          - [ubuntu-latest, manylinux_x86_64]
-        python: ["3.8", "3.8"]
+        python: ["3.8", "3.9"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -183,7 +183,7 @@ jobs:
 
       - name: Build sdist
         run: |
-          python -m build --sdist --wheel --outdir ./dist/py-${{ matrix.python }}
+          python -m build --sdist --wheel --outdir ./dist/py-${{ matrix.python }} /.
         shell: bash -el {0}
 
 
