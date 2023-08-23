@@ -76,7 +76,8 @@ jobs:
         os:
           - [ubuntu-latest, manylinux_x86_64]
         python:
-          - ["3.7", "cp37"]
+#          - ["3.7", "cp37"]
+          - ["3.8", "cp38"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -159,7 +160,6 @@ jobs:
             bash
             powershell
 
-#        - name: Install dependencies
 
 #      - name: Set up Python
 #        uses: conda-incubator/setup-miniconda@v2
@@ -188,7 +188,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.15.0
         with:
-         package-dir: ./dist/py-${{ matrix.python[1] }}-${{ matrix.os[0] }}/*
+         package-dir: ./
         env:
           CIBW_PRERELEASE_PYTHONS: True
           CIBW_BUILD: ${{ matrix.python[1] }}-${{ matrix.os[1] }}
