@@ -183,7 +183,7 @@ jobs:
 
       - name: Build sdist
         run: |
-          python -m build --sdist --wheel --outdir ./dist/py-${{ matrix.python }} /.
+          python -m build --sdist --wheel --outdir ./dist/py-${{ matrix.python }}
         shell: bash -el {0}
 
 
