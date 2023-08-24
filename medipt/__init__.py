@@ -10,3 +10,5 @@ import medipt.resample_image
 #            'transforms',
 #            'resample_image',
 #            ]
+from . import _version
+__version__ = _version.get_versions()['version']
