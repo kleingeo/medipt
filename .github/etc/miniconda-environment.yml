@@ -1,7 +1,7 @@
-name: anaconda-client-env
+name: wheel-env
 channels:
-  - conda-forge
   - defaults
+  - conda-forge
 dependencies:
   - anaconda-client
   - pip
@@ -9,4 +9,5 @@ dependencies:
   - conda-build
   - wheel
   - setuptools
-  - setuptools-git-versioning
+  - versioneer
+  - twine

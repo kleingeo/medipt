@@ -37,6 +37,7 @@ requirements:
   build:
     - SimpleITK
     - python
+    - versioneer
 
   host:
     - python {{ environ.get('PYTHON_VERSION') }}
