@@ -95,8 +95,8 @@ jobs:
         if: ${{ success() && (env.IS_PUSH == 'true' || env.IS_WORKFLOW_DISPATCH == 'true') }}
         run: |
           anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./conda-bld/py-${{ matrix.python }}/*/*.tar.bz2
-          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.tar.gz
-          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*/*.whl
+          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*.tar.gz
+          anaconda -t ${{ secrets.ANACONDA_TOKEN_MEDIPT }} upload ./dist/py-${{ matrix.python }}/*.whl
         shell: bash -el {0}
 
 
