@@ -11,13 +11,13 @@ source:
 
 build:
     number: 0
-    string: py{{ environ.get('PYTHON_VERSION').replace('.', '') }}_{{ 0.1 }}
+    string: py{{ environ.get('PYTHON_VERSION').replace('.', '') }}
     noarch: python
 #    script: python -m pip install --no-deps --ignore-installed .
 #    script: {{ PYTHON }} -m pip install .
 #    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
     script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .
-#    script: {{ PYTHON }} -m pip install -vv -e .
+#    script: {{ PYTHON }} -m pip install -vv .
 #    script: pip install .
 
     run_exports:
@@ -37,7 +37,6 @@ requirements:
   build:
     - SimpleITK
     - python
-    - versioneer
 
   host:
     - python {{ environ.get('PYTHON_VERSION') }}
