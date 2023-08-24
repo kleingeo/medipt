@@ -1,13 +1,10 @@
 package:
   name: medipt
-#  version: 0.1
   version: {{ environ["PACKAGE_VERSION"] }}
 
 
 source:
     path: ..
-#    git_url: ../
-#    path: ../dist/medipt-0.0.3.tar.gz
 
 build:
     number: 0
@@ -25,12 +22,6 @@ build:
       - libgcc-ng
 
 
-#    script_env:
-#      - VERSION
-
-#    script: |
-#      {{ PYTHON }} -m build --sdist --wheel --outdir dist/.
-#      {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
 
 
 requirements:
@@ -51,9 +42,6 @@ requirements:
     - numpy >=1.20.0
     - SimpleITK >=2.2.0
     - scipy >=1.6.0
-
-#outputs:
-#  - type: wheel
 
 
 test:
