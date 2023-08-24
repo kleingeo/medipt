@@ -1,7 +1,15 @@
+# Strip the 'v' from the version tag
+{% if GIT_DESCRIBE_TAG is defined %}
+{%   set version = GIT_DESCRIBE_TAG[1:] %}
+{% else %}
+{%   set version = "0.0.0" %}
+{% endif %}
+
+
 package:
   name: medipt
-  version: {{ environ["PACKAGE_VERSION"] }}
-
+#  version: {{ environ["PACKAGE_VERSION"] }}
+  version: {{ version  }}
 
 source:
     path: ..
@@ -25,9 +33,9 @@ build:
 
 
 requirements:
-  build:
-    - SimpleITK
-    - python
+#  build:
+#    - SimpleITK
+#    - python
 
   host:
     - python {{ environ.get('PYTHON_VERSION') }}
