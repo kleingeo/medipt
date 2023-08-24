@@ -2,12 +2,14 @@
 requires = [
     "setuptools>=61.0",
     "wheel",
-    "versioneer[toml]",
+    "setuptools_scm[toml]>=6.2",
+#    "versioneer[toml]",
+#    "tomli; python_version<'3.11'",
 #    "setuptools-git-versioning<2",
 ]
 build-backend = "setuptools.build_meta"
 
-#[tool.setuptools-git-versioning]
+#[tool.setuptools-git-versioning]conda
 #enabled = true
 
 [project]
@@ -26,6 +28,9 @@ dynamic = ["dependencies", "version"]
 keywords=[
     "medical-imaging",
 ]
+
+# pyproject.toml
+[tool.setuptools_scm]
 
 #[tool.setuptools]
 #packages = ["medipt"]
@@ -58,13 +63,13 @@ skip = [".gitingore", "__init__.py"]
 repository="https://github.com/kleingeo/ImageProcessingTools"
 
 
-# See the docstring in versioneer.py for instructions. Note that you must
-# re-run 'versioneer.py setup' after changing this section, and commit the
-# resulting files.
-[tool.versioneer]
-VCS = "git"
-style = "pep440"
-versionfile_source = "medipt/_version.py"
-versionfile_build = "medipt/_version.py"
-tag_prefix = "v"
-parentdir_prefix = "medipt-"
+## See the docstring in versioneer.py for instructions. Note that you must
+## re-run 'versioneer.py setup' after changing this section, and commit the
+## resulting files.
+#[tool.versioneer]
+#VCS = "git"
+#style = "pep440"
+#versionfile_source = "medipt/_version.py"
+#versionfile_build = "medipt/_version.py"
+#tag_prefix = "v"
+#parentdir_prefix = "medipt-"
