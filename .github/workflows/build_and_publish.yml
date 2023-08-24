@@ -77,7 +77,7 @@ jobs:
 
 #        os:
 #          - [ubuntu-latest, manylinux_x86_64]
-        python: ["3.8", "3.9"]
+        python: ["3.7", "3.8", "3.9"]
 #        buildplat:
 #        - [ubuntu-22.04, manylinux_x86_64]
 #        - [ubuntu-22.04, musllinux_x86_64]
@@ -176,7 +176,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          conda install anaconda-client wheel setuptools setuptools-git-versioning build conda-build twine
+          conda install anaconda-client wheel setuptools versioneer build conda-build twine
         shell: bash -el {0}
 
 
