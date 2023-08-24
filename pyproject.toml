@@ -1,24 +1,42 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = [
+    "setuptools>=61.0",
+    "wheel",
+    "versioneer[toml]",
+#    "setuptools-git-versioning<2",
+]
 build-backend = "setuptools.build_meta"
+
+#[tool.setuptools-git-versioning]
+#enabled = true
 
 [project]
 name="medipt"
-version="0.0.4"
+#version="0.1"
+
 authors=[
     {name="Geoff Klein"},
 ]
 license={text="BSD 3-Clause"}
-description="Stuff"
+description="Medical Imaging Processing Tools"
 readme="README.md"
 requires-python=">=3.7"
-dynamic = ["dependencies"]
+dynamic = ["dependencies", "version"]
+#dynamic = ["dependencies"]
 keywords=[
     "medical-imaging",
 ]
 
+#[tool.setuptools]
+#packages = ["medipt"]
+
+
 [tool.setuptools]
-packages = ["MedIPT"]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["medipt", "medipt.*"]
+namespaces = false
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
@@ -38,3 +56,15 @@ skip = [".gitingore", "__init__.py"]
 
 [project.urls]
 repository="https://github.com/kleingeo/ImageProcessingTools"
+
+
+# See the docstring in versioneer.py for instructions. Note that you must
+# re-run 'versioneer.py setup' after changing this section, and commit the
+# resulting files.
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "medipt/_version.py"
+versionfile_build = "medipt/_version.py"
+tag_prefix = "v"
+parentdir_prefix = "medipt-"

@@ -1,0 +1,73 @@
+package:
+  name: medipt
+#  version: 0.1
+  version: {{ environ["PACKAGE_VERSION"] }}
+
+
+source:
+    path: ..
+#    git_url: ../
+#    path: ../dist/medipt-0.0.3.tar.gz
+
+build:
+    number: 0
+    string: py{{ environ.get('PYTHON_VERSION').replace('.', '') }}_{{ 0.1 }}
+    noarch: python
+#    script: python -m pip install --no-deps --ignore-installed .
+#    script: {{ PYTHON }} -m pip install .
+#    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+    script: {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .
+#    script: {{ PYTHON }} -m pip install -vv -e .
+#    script: pip install .
+
+    run_exports:
+      - libgcc
+      - libgcc-ng
+
+
+#    script_env:
+#      - VERSION
+
+#    script: |
+#      {{ PYTHON }} -m build --sdist --wheel --outdir dist/.
+#      {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed -e .
+
+
+requirements:
+  build:
+    - SimpleITK
+    - python
+    - versioneer
+
+  host:
+    - python {{ environ.get('PYTHON_VERSION') }}
+    - setuptools
+    - pip
+    - SimpleITK >=2.2.0
+    - numpy >=1.20.0
+    - scipy >=1.6.0
+
+  run:
+    - python {{ environ.get('PYTHON_VERSION') }}
+    - numpy >=1.20.0
+    - SimpleITK >=2.2.0
+    - scipy >=1.6.0
+
+#outputs:
+#  - type: wheel
+
+
+test:
+  imports:
+    - medipt
+    - medipt.transforms
+    - medipt.transforms.spatial
+    - SimpleITK
+
+
+
+about:
+  home: https://github.com/kleingeo/ImageProcessingTools
+  license: BSD 3-Clause
+  license_file: LICENSE
+  summary: Medical Imaging Processing Tools
