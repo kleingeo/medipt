@@ -62,7 +62,7 @@ test:
 
 
 about:
-  home: https://github.com/kleingeo/ImageProcessingTools
+  home: https://github.com/kleingeo/medipt
   license: BSD 3-Clause
   license_file: LICENSE
   summary: Medical Imaging Processing Tools
