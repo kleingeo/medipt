@@ -44,22 +44,23 @@ def get_sitk_interpolator(interpolator):
 
 def get_simpleitk_pix_type(pixel_type: Union[str, int]) -> int:
     """
-        Returns the SimpleITK pixel type for the given pixel type string.
-        :param pixel_type: The pixel type as string.
-                           'float32': sitk.sitkFloat32
-                           'float64': sitk.sitkFloat64
-                           'int8': sitk.sitkInt8
-                           'int16': sitk.sitkInt16
-                           'int32': sitk.sitkInt32
-                           'int64': sitk.sitkInt64
-                           'uint8': sitk.sitkUInt8
-                           'uint16': sitk.sitkUInt16
-                           'uint32': sitk.sitkUInt32
-                           'uint64': sitk.sitkUInt64
-                           'complex64': sitk.sitkComplexFloat32
-                           'complex128': sitk.sitkComplexFloat64
-        :return: The SimpleITK pixel type.
-        """
+    Returns the SimpleITK pixel type for the given pixel type string.
+
+    :param pixel_type: The pixel type as string.
+                       'float32': sitk.sitkFloat32
+                       'float64': sitk.sitkFloat64
+                       'int8': sitk.sitkInt8
+                       'int16': sitk.sitkInt16
+                       'int32': sitk.sitkInt32
+                       'int64': sitk.sitkInt64
+                       'uint8': sitk.sitkUInt8
+                       'uint16': sitk.sitkUInt16
+                       'uint32': sitk.sitkUInt32
+                       'uint64': sitk.sitkUInt64
+                       'complex64': sitk.sitkComplexFloat32
+                       'complex128': sitk.sitkComplexFloat64
+    :return: The SimpleITK pixel type.
+    """
 
     if isinstance(pixel_type, str):
 

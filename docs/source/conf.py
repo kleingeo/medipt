@@ -10,11 +10,13 @@
 import sys
 import os
 sys.path.insert(0, os.path.abspath('../..'))
+import medipt
+
 
 project = 'MedIPT'
 copyright = '2023, Geoff Klein'
 author = 'Geoff Klein'
-release = '0.0.1'
+version = release = medipt.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -23,16 +25,22 @@ extensions = []
 
 templates_path = ['_templates']
 extensions = [
+    'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
     'sphinx_autodoc_typehints',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
-    'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages'
 ]
 
 autodoc_typehints = "description"
+# build the templated autosummary files
+autosummary_generate = True
+
+
+master_doc = "index"
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/', None),
@@ -46,3 +54,7 @@ intersphinx_mapping = {
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = []
+
+html_baseurl = 'medipt.org'
+
+html_title = 'MedIPT'

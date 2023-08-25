@@ -8,11 +8,22 @@ Welcome to ImageProcessingTools's documentation!
 
 Documentation for the ImageProcessingTools package.
 
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Install Instructions:
 
-   modules
+   install/installation
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Package References:
+
+   documentation/medipt
+
+
+
+
 
 
 Indices and tables
