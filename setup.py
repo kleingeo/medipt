@@ -14,7 +14,7 @@ setup(
     packages=find_packages(include=['medipt', 'medipt.*']),
     # package_dir={'': 'medipt'},
     install_requires=['requirements.txt'],
-    url='https://github.com/kleingeo/ImageProcessingTools',
+    url='https://github.com/kleingeo/medipt',
     license='BSD 3-Clause',
     author='Geoff Klein',
     description='Medical Imaging Processing Tools'
