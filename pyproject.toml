@@ -51,4 +51,4 @@ skip = [".gitingore", "__init__.py"]
 
 
 [project.urls]
-repository="https://github.com/kleingeo/ImageProcessingTools"
+repository="https://github.com/kleingeo/medipt"
