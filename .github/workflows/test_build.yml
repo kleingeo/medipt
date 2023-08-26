@@ -27,15 +27,18 @@ jobs:
         run: echo "PYTHON_VERSION=${{ matrix.python }}" >> $GITHUB_ENV
         shell: bash -el {0}
 
-      - name: Set up Python
-        uses: conda-incubator/setup-miniconda@v2
-        with:
-          auto-update-conda: true
-          miniconda-version: "latest"
-          python-version: "3.9"
-          activate-environment: wheel-env
-          environment-file: ./.github/etc/miniconda-environment.yml
+#      - name: Set up Python
+#        uses: conda-incubator/setup-miniconda@v2
+#        with:
+#          auto-update-conda: true
+#          miniconda-version: "latest"
+#          python-version: "3.9"
+#          activate-environment: wheel-env
+#          environment-file: ./.github/etc/miniconda-environment.yml
 
+
+      - name: Setup python
+        uses: actions/setup-python@v3
 
 
       - name: Build sdist
@@ -49,7 +52,7 @@ jobs:
           python -m pip install dist/py-3.9/*.whl
           python -c "import medipt"
           python -c "import SimpleITK"
-
+        shell: bash -el {0}
 
 
 
