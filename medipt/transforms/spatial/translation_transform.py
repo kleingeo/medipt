@@ -91,6 +91,56 @@ class RandomTranslation(RandomAffineTransform, TranslationTransform):
         # return self.transform
 
 
+class RandomCoordTranslation(RandomAffineTransform, TranslationTransform):
+    def __init__(self,
+                 dim: Union[int, None] = 3,
+                 used_dimensions: bool = None,
+
+                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+                 legacy_random_state: bool = True,
+                 *args, **kwargs):
+        """
+        Initializer.
+        :param dim: The dimension.
+        :param random_offset: List of random offsets per dimension. Random offset is calculated uniformly within [-random_offset[i], random_offset[i]]
+        :param args: Arguments passed to super init.
+        :param kwargs: Keyword arguments passed to super init.
+        """
+
+        super(RandomCoordTranslation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+
+
+    def get_random_transform(self,
+                             coord: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                             translation_extent: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                             transformation_dict: dict = None,
+                             *args, **kwargs):
+
+
+
+        if isinstance(translation_extent, (int, float, np.float_, np.int_)):
+            translation_extent = np.ndarray([translation_extent] * self.dim)
+        elif isinstance(translation_extent, (tuple, list)):
+            translation_extent = np.array(translation_extent)
+        elif isinstance(translation_extent, np.ndarray):
+            if len(translation_extent) < self.dim:
+                translation_extent = np.array([translation_extent] * self.dim)
+
+
+        if isinstance(coord, (int, float, np.float_, np.int_)):
+            coord = np.ndarray([coord] * self.dim)
+        elif isinstance(coord, (tuple, list)):
+            coord = np.array(coord)
+
+        assert len(coord) == len(translation_extent), "coord and translation_extent must have the same length."
+
+
+        coord_min = coord - translation_extent
+        coord_max = coord + translation_extent
+
+        self._get_random_transform(min_range=coord_min, max_range=coord_max, transformation_dict=transformation_dict,
+                                   offset=coord, *args, **kwargs)
+
 
 class TranslateInputCenterToInputOrigin(TranslationTransform):
     def get_transform(self,
@@ -119,6 +169,21 @@ class TranslateInputOriginToOutputCenter(TranslationTransform):
         translation = tuple([-output_center_phys[i] for i in range(self.dim)])
 
         self._get_transform(translation)
+
+
+class TranslateInputCenterToOutputCenter(TranslationTransform):
+    def get_transform(self,
+                      *args, **kwargs):
+
+        input_center_phys = self.get_input_center(*args, **kwargs)
+        output_center_phys = self.get_output_center(*args, **kwargs)
+
+
+        translation = tuple([input_center_phys[i] - output_center_phys[i] for i in range(self.dim)])
+
+        self._get_transform(translation)
+
+        # return self.t
 
 
 class TranslateInputCenterToOutputCenter(TranslationTransform):
@@ -360,6 +425,12 @@ class RandomBBoxTranslation(RandomAffineTransform, TranslationTransform):
 
         self._get_random_transform(min_trans, max_trans, transformation_dict=transformation_dict,
                                    *args, **kwargs)
+
+
+
+
+
+
 
 
 

@@ -10,7 +10,7 @@ from .flipping_transform import FlippingTransform, RandomFlipping
 from .elastic_deformation_transform import ElasticDeformation, RandomElasticDeformation,\
     ElasticDeformationInputImage, RandomElasticDeformationTransformInputImage,\
     RandomElasticDeformationTransformOutputImage
-from .translation_transform import TranslationTransform, RandomTranslation, RandomBBoxTranslation, \
+from .translation_transform import TranslationTransform, RandomTranslation, RandomCoordTranslation, RandomBBoxTranslation, \
     TranslateInputCenterToOutputCenter, \
     TranslateInputOriginToOutputCenter, TranslateInputCenterToInputOrigin
     # TranslateInputOriginToInputCenter, TranslateInputOriginToOutputOrigin, \
@@ -129,6 +129,17 @@ class SpatialTransformInit:
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
             *args, **kwargs)
+
+
+    def random_coord_translation(self,
+                                 *args, **kwargs):
+        return RandomCoordTranslation(
+            dim=self.dim,
+            used_dimensions=self.used_dimensions,
+            seed=self.seed,
+            legacy_random_state=self.legacy_random_state,
+            *args, **kwargs)
+
 
     def random_bbox_translation(self,
                                 *args, **kwargs):
