@@ -117,16 +117,3 @@ class RescaleClampIntensity:
 
         return scaled_image
 
-
-
-if __name__ == '__main__':
-
-
-    img = sitk.ReadImage('..\..\..\sub-verse260.nii.gz')
-
-
-    rescale = RescaleClampIntensity(new_min=-1,
-                                    new_max=1,
-                                    window_min=-1024)
-
-    rescaled_image = rescale.rescale_intensity(img)
