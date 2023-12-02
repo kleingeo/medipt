@@ -1,11 +1,12 @@
 import numpy as np
 import random
-from typing import Union, Tuple, List, Any
+from typing import Union, Tuple, List, Any, Callable, Optional
+from types import ModuleType
 
 
 def initialize_rand_state(
         seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
-        legacy_random_state: bool = True, ):
+        legacy_random_state: bool = True, ) -> Union[ModuleType, np.random.Generator, np.random.BitGenerator]:
     if seed is not None:
         if isinstance(seed, int):
             if legacy_random_state:

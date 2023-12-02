@@ -113,6 +113,7 @@ def gaussian_blur_sitk(image: sitk.Image,
 def gaussian_noise_sitk(image: sitk.Image,
                         mean: Union[int, float],
                         sigma: Union[int, float],
+                        seed: int = None,
                         *args, **kwargs) -> sitk.Image:
 
     image_default_pixel_type = image.GetPixelID()
@@ -120,6 +121,9 @@ def gaussian_noise_sitk(image: sitk.Image,
     gaussian_noise_filter = sitk.AdditiveGaussianNoiseImageFilter()
     gaussian_noise_filter.SetMean(mean)
     gaussian_noise_filter.SetStandardDeviation(sigma)
+
+    if seed is not None:
+        gaussian_noise_filter.SetSeed(seed)
 
     rescast_filter = sitk.CastImageFilter()
     rescast_filter.SetOutputPixelType(sitk.sitkFloat64)

@@ -1,8 +1,8 @@
 import SimpleITK as sitk
 import numpy as np
 from scipy.ndimage import gaussian_filter
-from typing import Union, Tuple, List
-
+from typing import Union, Tuple, List, Any, Callable, Optional
+from types import ModuleType
 
 
 def clamp_intensity_np(image: np.ndarray,
@@ -73,8 +73,9 @@ def gaussian_blur_np(image: np.ndarray,
 def gaussian_noise_np(image: np.ndarray,
                       mean: Union[int, float],
                       sigma: Union[int, float],
+                      rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
                       *args, **kwargs) -> np.ndarray:
 
-    gaussian = np.random.normal(mean, sigma, image.shape)
+    gaussian = rand_init.normal(mean, sigma, image.shape)
     output_image = image + gaussian
     return output_image
