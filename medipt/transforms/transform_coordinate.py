@@ -13,7 +13,7 @@ class TransformCoordinate:
     def transform_coordinate(self,
                              phys_coordinate: Union[List[Union[float, int]], Tuple[Union[float, int], ...], float],
                              transform: sitk.Transform,
-                             *args, **kwargs):
+                             *args, **kwargs) -> Union[List[Union[float, int]], Tuple[Union[float, int], ...], float]:
 
         transform_coord = transform.TransformPoint(phys_coordinate)
 

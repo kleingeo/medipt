@@ -50,7 +50,9 @@ def random_binomial(
 
         seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
 
-        legacy_random_state: bool = True,) -> np.ndarray:
+        legacy_random_state: bool = True,
+
+        rand_init:  Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None) -> Union[np.ndarray, int]:
     '''
 
     :param n:
@@ -62,7 +64,8 @@ def random_binomial(
     :return:
     '''
 
-    rand_init = initialize_rand_state(seed=seed, legacy_random_state=legacy_random_state)
+    if rand_init is None:
+        rand_init = initialize_rand_state(seed=seed, legacy_random_state=legacy_random_state)
 
     binomial_out = rand_init.binomial(n=n, p=p, size=output_size)
 
@@ -91,9 +94,13 @@ def random_uniform_float(
 
         legacy_random_state: bool = True,
 
+        rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None
+
+
 ) -> Union[float, List[float], np.ndarray]:
 
-    rand_init = initialize_rand_state(seed=seed, legacy_random_state=legacy_random_state)
+    if rand_init is None:
+        rand_init = initialize_rand_state(seed=seed, legacy_random_state=legacy_random_state)
 
     # if seed is not None:
     #     if isinstance(seed, int):

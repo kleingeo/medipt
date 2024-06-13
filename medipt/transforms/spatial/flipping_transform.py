@@ -58,36 +58,70 @@ class RandomFlipping(FlippingTransform):
                              *args, **kwargs,
                              ):
 
-
-
         if isinstance(flip_axes, (tuple, list, np.ndarray)):
-            current_flip_axes = []
-            if len(flip_axes) > 1:
-                if len(flip_axes) != self.dim:
-                    raise ValueError(f'flip axes must be a tuple or list of length {self.dim}.')
 
-            for flip_axis in flip_axes:
+            if isinstance(flip_axes, np.ndarray):
+                probability = flip_axes * 0.5
 
-                if flip_axis == 1:
-                    current_flip_axis = random_binomial(n=1, p=0.5,
-                                                        seed=self.seed,
-                                                        legacy_random_state=self.legacy_random_state)
-                else:
-                    current_flip_axis = 0
-
-                current_flip_axes.append(bool(current_flip_axis))
-
-        elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
-            if flip_axes == 1:
-                current_flip_axis = random_binomial(n=1, p=0.5,
-                                                    seed=self.seed,
-                                                    legacy_random_state=self.legacy_random_state)
+            elif isinstance(flip_axes, (list, tuple)):
+                probability = 0.5 * np.array(flip_axes)
 
             else:
-                current_flip_axis = 0
-            current_flip_axes = [bool(current_flip_axis)] * self.dim
+                raise ValueError('flip axes must be tuples, lists, or numbers.')
+
+        elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
+
+            probability = 0.5 * flip_axes
 
         else:
             raise ValueError('flip axes must be tuples, lists, or numbers.')
 
-        self._get_transform(current_flip_axes, *args, **kwargs)
+        current_flip_axis = random_binomial(n=1, p=probability,
+                                            seed=self.seed,
+                                            legacy_random_state=self.legacy_random_state,
+                                            rand_init=self.rand_init)
+
+        self._get_transform(current_flip_axis, *args, **kwargs)
+
+
+
+
+
+
+
+
+
+        #
+        # if isinstance(flip_axes, (tuple, list, np.ndarray)):
+        #     current_flip_axes = []
+        #     if len(flip_axes) > 1:
+        #         if len(flip_axes) != self.dim:
+        #             raise ValueError(f'flip axes must be a tuple or list of length {self.dim}.')
+        #
+        #     for flip_axis in flip_axes:
+        #
+        #         if flip_axis == 1:
+        #             current_flip_axis = random_binomial(n=1, p=0.5,
+        #                                                 seed=self.seed,
+        #                                                 legacy_random_state=self.legacy_random_state,
+        #                                                 rand_init=self.rand_init)
+        #         else:
+        #             current_flip_axis = 0
+        #
+        #         current_flip_axes.append(bool(current_flip_axis))
+        #
+        # elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
+        #     if flip_axes == 1:
+        #         current_flip_axis = random_binomial(n=1, p=0.5,
+        #                                             seed=self.seed,
+        #                                             legacy_random_state=self.legacy_random_state,
+        #                                             rand_init=self.rand_init)
+        #
+        #     else:
+        #         current_flip_axis = 0
+        #     current_flip_axes = [bool(current_flip_axis)] * self.dim
+        #
+        # else:
+        #     raise ValueError('flip axes must be tuples, lists, or numbers.')
+        #
+        # self._get_transform(current_flip_axes, *args, **kwargs)

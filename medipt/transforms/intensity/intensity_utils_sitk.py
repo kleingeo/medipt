@@ -65,21 +65,76 @@ def shift_scale_intensity_sitk(image: sitk.Image,
 
 
 def rescale_intensity_sitk(image: sitk.Image,
-                           new_min: Union[int, float] = None,
-                           new_max: Union[int, float] = None,
+                           output_min: Union[int, float] = None,
+                           output_max: Union[int, float] = None,
                            *args, **kwargs) -> sitk.Image:
 
-    if (new_min is None) or (new_max is None):
-        image_min_max = min_max_intensity_sitk(image)
 
-        if new_min is None:
-            new_min = image_min_max[0]
-        if new_max is None:
-            new_max = image_min_max[1]
+    if (output_min is None) and (output_max is None):
+        raise ValueError('Need to provide output minimum and/or output maximum.')
+    else:
+        image_min_max = min_max_intensity_sitk(image)
+        if output_min is None:
+            output_min = image_min_max[0]
+        if output_max is None:
+            output_max = image_min_max[1]
+
+
+    # if (output_min is None) or (output_max is None):
+    #     image_min_max = min_max_intensity_sitk(image)
+    #     if output_min is None:
+    #         output_min = image_min_max[0]
+    #     if output_max is None:
+    #         output_max = image_min_max[1]
+    # else:
+    #     raise ValueError('Need to provide output minimum and/or output maximum.')
+
 
     rescale_filter = sitk.RescaleIntensityImageFilter()
-    rescale_filter.SetOutputMinimum(new_min)
-    rescale_filter.SetOutputMaximum(new_max)
+    rescale_filter.SetOutputMinimum(output_min)
+    rescale_filter.SetOutputMaximum(output_max)
+
+    rescaled_image = rescale_filter.Execute(image)
+
+    return rescaled_image
+
+def rescale_intensity_window_sitk(image: sitk.Image,
+                           # output_min: Union[int, float] = None,
+                           # output_max: Union[int, float] = None,
+                           input_min: Union[int, float] = None,
+                           input_max: Union[int, float] = None,
+                           output_min: Union[int, float] = None,
+                           output_max: Union[int, float] = None,
+                           *args, **kwargs) -> sitk.Image:
+
+    image_min_max = min_max_intensity_sitk(image)
+
+    if input_min is None:
+        input_min = image_min_max[0]
+
+    if input_max is None:
+        input_max = image_min_max[1]
+
+
+    if (output_min is None) and (output_max is None):
+        raise ValueError('Need to provide output minimum and/or output maximum.')
+    else:
+        if output_min is None:
+            output_min = input_min
+        if output_max is None:
+            output_max = input_max
+
+
+
+
+    rescale_filter = sitk.IntensityWindowingImageFilter()
+
+    rescale_filter.SetOutputMaximum(output_max)
+    rescale_filter.SetOutputMinimum(output_min)
+
+    rescale_filter.SetWindowMaximum(input_max)
+    rescale_filter.SetWindowMinimum(input_min)
+
 
     rescaled_image = rescale_filter.Execute(image)
 

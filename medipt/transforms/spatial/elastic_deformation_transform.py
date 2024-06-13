@@ -49,11 +49,14 @@ class ElasticDeformation(SpatialTransform):
 
     def _get_deform_transform(self,
                               spline_params: List[float],
-                              *args, **kwargs):
+                              *args, **kwargs) -> sitk.BSplineTransform:
 
 
-        direction_reshape = np.reshape(self.image_direction, (self.dim, self.dim))
-        physical_dimensions = np.matmul(direction_reshape * self.image_spacing, self.image_size)
+        # direction_reshape = np.reshape(self.image_direction, (self.dim, self.dim))
+        # physical_dimensions = np.matmul(direction_reshape * self.image_spacing, self.image_size)
+
+        physical_dimensions = np.array(self.image_spacing) * np.array(self.image_size)
+
 
         mesh_size = [grid_node - self.spline_order for grid_node in self.num_grid_points]
         t = sitk.BSplineTransform(self.dim, self.spline_order)
@@ -108,7 +111,7 @@ class ElasticDeformation(SpatialTransform):
 
 
         if isinstance(spline_params, np.ndarray):
-            spline_params = spline_params.flatten(order='F').tolist()
+            spline_params = spline_params.flatten().tolist()
 
         self.transform = self._get_deform_transform(spline_params, *args, **kwargs)
 
@@ -250,11 +253,31 @@ class RandomElasticDeformation(ElasticDeformation):
 
         output_size = *num_grid_points, self.dim
 
-        spline_params = random_uniform_float(-1, 1, output_size,
-                                             seed=self.seed, legacy_random_state=self.legacy_random_state)
+        spline_params = random_uniform_float(-1, 1,
+                                             output_size=output_size,
+                                             seed=self.seed,
+                                             legacy_random_state=self.legacy_random_state,
+                                             rand_init=self.rand_init)
 
         for dimension in range(self.dim):
             spline_params[..., dimension] *= max_deformation_displacement[dimension]
+
+
+
+
+
+
+
+
+        # if isinstance(max_deformation_displacement, (list, tuple)):
+        #     spline_params = []
+        #     for v in max_deformation_displacement:
+        #         for i in range(int(np.prod(num_grid_points))):
+        #             spline_params.append(random_uniform_float(-v, v, seed=self.seed,
+        #                                                       legacy_random_state=self.legacy_random_state,
+        #                                                       rand_init=self.rand_init))
+
+
 
         return spline_params
 

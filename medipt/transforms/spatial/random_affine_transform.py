@@ -47,10 +47,12 @@ class RandomAffineTransform(SpatialTransform):
                 assert len(self.max_range) == self.dim, f'max angles must be a tuple or list of length {self.dim}.'
 
                 random_params = random_uniform_float(self.min_range, self.max_range,
-                                                     seed=self.seed, legacy_random_state=self.legacy_random_state)
+                                                     seed=self.seed, legacy_random_state=self.legacy_random_state,
+                                                     rand_init=self.rand_init)
             else:
                 random_params = random_uniform_float(self.min_range[0], self.max_range[0], output_size=self.dim,
-                                                     seed=self.seed, legacy_random_state=self.legacy_random_state)
+                                                     seed=self.seed, legacy_random_state=self.legacy_random_state,
+                                                     rand_init=self.rand_init)
 
 
         elif isinstance(self.min_range, (int, float, np.ndarray, np.float_, np.int_)):
@@ -60,10 +62,12 @@ class RandomAffineTransform(SpatialTransform):
             if uniform is False:
 
                 random_params = random_uniform_float(self.min_range, self.max_range, output_size=self.dim,
-                                                     seed=self.seed, legacy_random_state=self.legacy_random_state)
+                                                     seed=self.seed, legacy_random_state=self.legacy_random_state,
+                                                     rand_init=self.rand_init)
             else:
                 random_params = random_uniform_float(self.min_range, self.max_range,
-                                                     seed=self.seed, legacy_random_state=self.legacy_random_state)
+                                                     seed=self.seed, legacy_random_state=self.legacy_random_state,
+                                                     rand_init=self.rand_init)
 
                 random_params = [random_params] * self.dim
 
