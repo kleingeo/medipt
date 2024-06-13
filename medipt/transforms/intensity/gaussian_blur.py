@@ -56,7 +56,7 @@ class RandomGaussianBlur:
             return gaussian_blur_np(image, sigma, *args, **kwargs)
 
         elif isinstance(image, sitk.Image):
-            return gaussian_noise_sitk(image, sigma, *args, **kwargs)
+            return gaussian_blur_sitk(image, sigma, *args, **kwargs)
 
         else:
             raise ImportError("image must be either a numpy array or a SimpleITK image.")

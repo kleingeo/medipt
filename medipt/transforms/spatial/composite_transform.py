@@ -48,7 +48,7 @@ class CompositeTransform:
         return compos
 
     def create_inverse_composite(self, dim: int = 3,
-                                 use_displacement_field: bool = False):
+                                 use_displacement_field: bool = False) -> sitk.CompositeTransform:
         compos = sitk.CompositeTransform(dim)
 
         for transform in self.transforms[::-1]:

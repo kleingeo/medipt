@@ -1,8 +1,8 @@
 import SimpleITK as sitk
 import numpy as np
 from scipy.ndimage import gaussian_filter
-from typing import Union, Tuple, List
-
+from typing import Union, Tuple, List, Any, Callable, Optional
+from types import ModuleType
 
 
 def clamp_intensity_np(image: np.ndarray,
@@ -44,18 +44,54 @@ def shift_scale_intensity_np(image: np.ndarray,
     return rescaled_image
 
 
+
 def rescale_intensity_np(image: np.ndarray,
-                         new_min: Union[int, float] = None,
-                         new_max: Union[int, float] = None,
+                         output_min: Union[int, float] = None,
+                         output_max: Union[int, float] = None,
                          *args, **kwargs) -> np.ndarray:
 
-    if (new_min is None) or (new_max is None):
-        if new_min is None:
-            new_min = image.min()
-        if new_max is None:
-            new_max = image.min()
 
-    rescaled_image = (image - new_min) / (new_max - new_min)
+    if (output_min is None) or (output_max is None):
+        if output_min is None:
+            output_min = image.min()
+        if output_max is None:
+            output_max = image.min()
+    else:
+        raise ValueError('Need to provide output minimum and/or output maximum.')
+
+    input_min = image.min()
+    input_max = image.max()
+
+    rescaled_image = (image - input_min) * (output_max - output_min) / (input_max - input_min) + output_max
+
+    return rescaled_image
+
+def rescale_intensity_window_np(image: np.ndarray,
+                                input_min: Union[int, float] = None,
+                                input_max: Union[int, float] = None,
+                                output_min: Union[int, float] = None,
+                                output_max: Union[int, float] = None,
+                                *args, **kwargs) -> np.ndarray:
+
+    if input_min is None:
+        input_min = image.min()
+
+    if input_max is None:
+        input_max = image.max()
+
+    if (output_min is None) and (output_max is None):
+        raise ValueError('Need to provide output minimum and/or output maximum.')
+    else:
+        if output_min is None:
+            output_min = input_min
+        if output_max is None:
+            output_max = input_max
+
+
+    rescaled_image = (image - input_min) * (output_max - output_min) / (input_max - input_min) + output_min
+
+    rescaled_image = np.clip(rescaled_image, a_min=output_min, a_max=output_max)
+
     return rescaled_image
 
 
@@ -73,8 +109,9 @@ def gaussian_blur_np(image: np.ndarray,
 def gaussian_noise_np(image: np.ndarray,
                       mean: Union[int, float],
                       sigma: Union[int, float],
+                      rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
                       *args, **kwargs) -> np.ndarray:
 
-    gaussian = np.random.normal(mean, sigma, image.shape)
+    gaussian = rand_init.normal(mean, sigma, image.shape)
     output_image = image + gaussian
     return output_image

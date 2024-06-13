@@ -158,6 +158,22 @@ class TranslateInputCenterToInputOrigin(TranslationTransform):
 
 
 
+class TranslateRandomInputCenterToInputOrigin(TranslationTransform):
+    def get_transform(self,
+                      *args, **kwargs):
+
+        input_center_phys = self.get_random_point(*args, **kwargs)
+        input_origin_phys = self.get_input_origin(*args, **kwargs)
+
+        # translation = tuple([input_center_phys[i] - input_origin_phys[i] for i in range(self.dim)])
+        translation = tuple([input_center_phys[i] for i in range(self.dim)])
+
+        self._get_transform(translation)
+
+        # return self.t
+
+
+
 class TranslateInputOriginToOutputCenter(TranslationTransform):
     def get_transform(self,
                       *args, **kwargs):
@@ -398,11 +414,13 @@ class RandomBBoxTranslation(RandomAffineTransform, TranslationTransform):
         bbox_center_start = kwargs.get('centroids_bb_start', None)
         bbox_center_end = kwargs.get('centroids_bb_end', None)
 
-        bbox_extent = bbox_center_end - bbox_center_start
 
-        if bbox_center_start is None or bbox_center_end is None:
+
+        if (bbox_center_start is None) and (bbox_center_end is None):
             raise ValueError('Centroid bounding box start and end must be provided when using '
                              '"RandomBBoxTranslation".')
+
+        bbox_extent = bbox_center_end - bbox_center_start
 
         output_size = kwargs.get('output_size', None)
         output_spacing = kwargs.get('output_spacing', None)
@@ -414,7 +432,10 @@ class RandomBBoxTranslation(RandomAffineTransform, TranslationTransform):
                                                                spacing=output_spacing,
                                                                direction=output_direction)
 
-        extra_space = bbox_extent - np.array(output_image_size_phys)
+        try:
+            extra_space = bbox_extent - np.array(output_image_size_phys)
+        except:
+            a = 1
 
         # Only translate if the bbox is larger than the output image size
         extra_space[extra_space < 0] = 0

@@ -7,12 +7,24 @@ from .composite_transform import CompositeTransform
 from .rotation_transform import RotationTransform, RandomRotation
 from .scaling_transform import ScalingTransform, RandomScaling, RandomUniformScaling
 from .flipping_transform import FlippingTransform, RandomFlipping
-from .elastic_deformation_transform import ElasticDeformation, RandomElasticDeformation,\
-    ElasticDeformationInputImage, RandomElasticDeformationTransformInputImage,\
-    RandomElasticDeformationTransformOutputImage
-from .translation_transform import TranslationTransform, RandomTranslation, RandomCoordTranslation, RandomBBoxTranslation, \
-    TranslateInputCenterToOutputCenter, \
-    TranslateInputOriginToOutputCenter, TranslateInputCenterToInputOrigin
+
+from .elastic_deformation_transform import (
+    ElasticDeformation,
+    RandomElasticDeformation,
+    ElasticDeformationInputImage,
+    RandomElasticDeformationTransformInputImage,
+    RandomElasticDeformationTransformOutputImage)
+
+from .translation_transform import (
+    TranslationTransform,
+    RandomTranslation,
+    RandomCoordTranslation,
+    RandomBBoxTranslation,
+    TranslateInputCenterToOutputCenter,
+    TranslateInputOriginToOutputCenter,
+    TranslateInputCenterToInputOrigin,
+    TranslateRandomInputCenterToInputOrigin)
+
     # TranslateInputOriginToInputCenter, TranslateInputOriginToOutputOrigin, \
     # TranslateInputCenterToOutputOrigin, \
 
@@ -154,6 +166,16 @@ class SpatialTransformInit:
     def translate_input_center_to_input_origin(self,
                                                *args, **kwargs):
         return TranslateInputCenterToInputOrigin(
+            dim=self.dim,
+            used_dimensions=self.used_dimensions,
+            seed=self.seed,
+            legacy_random_state=self.legacy_random_state,
+            *args, **kwargs)
+
+
+    def translate_random_input_center_to_input_origin(self,
+                                               *args, **kwargs):
+        return TranslateRandomInputCenterToInputOrigin(
             dim=self.dim,
             used_dimensions=self.used_dimensions,
             seed=self.seed,

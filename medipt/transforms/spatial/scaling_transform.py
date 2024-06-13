@@ -54,7 +54,7 @@ class ScalingTransform(SpatialTransform):
 
         self._get_transform(scale, *args, **kwargs)
 
-    def get_scale_transform(self, dim, scale, direction):
+    def get_scale_transform(self, dim, scale, direction) -> sitk.AffineTransform:
         """
         Returns the sitk transform based on the given parameters.
         :param dim: The dimension.
@@ -129,11 +129,11 @@ class RandomUniformScaling(ScalingTransform, RandomAffineTransform):
             *args, **kwargs):
 
 
-        self.transform = self._get_random_transform(min_scaling, max_scaling,
-                                                    transform_dict=transformation_dict,
-                                                    value_offset=1.0,
-                                                    uniform=True,
-                                                    *args, **kwargs)
+        self._get_random_transform(min_scaling, max_scaling,
+                                   transform_dict=transformation_dict,
+                                   value_offset=1.0,
+                                   uniform=True,
+                                   *args, **kwargs)
 
         # return self.t
 

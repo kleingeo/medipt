@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 import numpy as np
 import SimpleITK as sitk
 from typing import Union, Tuple, List
+from types import ModuleType
 from ...utils import image_index_to_phys
+from ...utils.random_float import initialize_rand_state
 from ...utils.image_input_output_space import resolve_input_output_space
 
 class SpatialTransform(ABC):
@@ -37,6 +39,8 @@ class SpatialTransform(ABC):
         self.inverted_displacement_field = None
         self.inverted_transform_from_displacement = None
 
+
+        self.rand_init = initialize_rand_state(self.seed, self.legacy_random_state)
 
         assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
 
@@ -91,7 +95,11 @@ class SpatialTransform(ABC):
             image_spacing: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,
             image_origin: Union[List[Union[int, float]], Tuple[Union[int, float], ...]] = None,
             image_direction: Union[List[Union[int, float]], Tuple[Union[int, float]]] = None,
-            *args, **kwargs):
+            *args, **kwargs) -> Tuple[
+        Union[List[Union[int, float]], Tuple[Union[int, float]], np.ndarray],
+        Union[List[Union[int, float]], Tuple[Union[int, float]], np.ndarray],
+        Union[List[Union[int, float]], Tuple[Union[int, float]], np.ndarray],
+        Union[List[Union[int, float]], Tuple[Union[int, float]], np.ndarray]]:
 
 
         if image is not None:
@@ -167,7 +175,7 @@ class SpatialTransform(ABC):
 
 
     def get_input_origin(self,
-                         *args, **kwargs):
+                         *args, **kwargs) -> List[float]:
 
         if self.image_params_gathered is False:
             self.get_input_output_space(*args, **kwargs)
@@ -183,7 +191,7 @@ class SpatialTransform(ABC):
 
         return input_origin_phys
 
-    def get_output_origin(self, *args, **kwargs):
+    def get_output_origin(self, *args, **kwargs) -> List[float]:
 
         if self.image_params_gathered is False:
             self.get_input_output_space(*args, **kwargs)
@@ -198,7 +206,7 @@ class SpatialTransform(ABC):
 
         return output_origin_phys
 
-    def get_input_center(self, *args, **kwargs):
+    def get_input_center(self, *args, **kwargs) -> List[float]:
         if self.image_params_gathered is False:
             self.get_input_output_space(*args, **kwargs)
 
@@ -213,7 +221,33 @@ class SpatialTransform(ABC):
 
         return input_center_phys
 
-    def get_output_center(self, *args, **kwargs):
+
+    def get_random_point(self,
+                         *args, **kwargs) -> List[float]:
+
+        if self.image_params_gathered is False:
+            self.get_input_output_space(*args, **kwargs)
+
+        input_center_index = tuple([(i - 1) / 2 for i in self.input_size])
+
+        input_center_index_min = np.array(input_center_index) - (np.array(input_center_index) // 4)
+        input_center_index_max = np.array(input_center_index) + (np.array(input_center_index) // 4)
+
+        input_index = self.rand_init.randint(low=input_center_index_min, high=input_center_index_max)
+
+        input_index = (int(input_index[0]), int(input_index[1]), int(input_index[2]))
+
+        input_center_phys = image_index_to_phys(dim=self.dim,
+                                                index_coords=input_index,
+                                                spacing=self.input_spacing,
+                                                direction=self.input_direction,
+                                                origin=self.input_origin)
+
+        return input_center_phys
+
+
+
+    def get_output_center(self, *args, **kwargs) -> List[float]:
         if self.image_params_gathered is False:
             self.get_input_output_space(*args, **kwargs)
 
