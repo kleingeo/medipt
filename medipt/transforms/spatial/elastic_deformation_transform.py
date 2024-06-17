@@ -140,7 +140,7 @@ class ElasticDeformation(SpatialTransform):
                 spline_params_inv = [-1 * param for param in self.spline_params]
 
             if isinstance(spline_params_inv, np.ndarray):
-                spline_params_inv = spline_params_inv.flatten(order='F').tolist()
+                spline_params_inv = spline_params_inv.flatten().tolist()
 
             self.inverse_transform = self._get_deform_transform(spline_params_inv, *args, **kwargs)
 

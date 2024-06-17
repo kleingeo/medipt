@@ -2,6 +2,7 @@ import SimpleITK as sitk
 import numpy as np
 from typing import Union, Tuple, List
 from .spatial_transform import SpatialTransform
+from .elastic_deformation_transform import ElasticDeformation
 
 def composite_transform(transforms: List[Union[sitk.AffineTransform, sitk.BSplineTransform, sitk.DisplacementFieldTransform]],
                         dim: int = 3):
@@ -54,15 +55,30 @@ class CompositeTransform:
         for transform in self.transforms[::-1]:
             if isinstance(transform, SpatialTransform):
 
-                if use_displacement_field:
-                    transform.get_inverted_transform_from_displacement()
-                    sitk_inverse_transform = transform.inverted_transform_from_displacement
+                if isinstance(transform, ElasticDeformation):
+                    if use_displacement_field:
+                        transform.get_inverted_transform_from_displacement()
+                        sitk_inverse_transform = transform.inverted_transform_from_displacement
+
+                    else:
+                        transform.get_inverse_transform()
+                        sitk_inverse_transform = transform.inverse_transform
 
                 else:
                     transform.get_inverse_transform()
                     sitk_inverse_transform = transform.inverse_transform
 
+                # if use_displacement_field:
+                #     transform.get_inverted_transform_from_displacement()
+                #     sitk_inverse_transform = transform.inverted_transform_from_displacement
+                #
+                # else:
+                #     transform.get_inverse_transform()
+                #     sitk_inverse_transform = transform.inverse_transform
+
+
                 compos.AddTransform(sitk_inverse_transform)
+
             else:
                 if use_displacement_field:
                     raise Warning("The use_displacement_field option is not implemented for SimpleITK transforms.")
