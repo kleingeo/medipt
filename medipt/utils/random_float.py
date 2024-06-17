@@ -42,9 +42,9 @@ def initialize_rand_state(
 
 
 def random_binomial(
-        n: Union[int, float, np.int_, np.float_],
-        p: Union[int, float, np.int_, np.float_],
-        output_size: Union[List[Union[int, float]], Tuple[Union[int, float]], int, float, np.int_, np.float_] = None,
+        n: Union[int, float, np.integer, np.floating],
+        p: Union[int, float, np.integer, np.floating],
+        output_size: Union[List[Union[int, float]], Tuple[Union[int, float]], int, float, np.integer, np.floating] = None,
 
         ignore_axis: Union[None, List[int], Tuple[int], int] = None,
 
@@ -84,9 +84,9 @@ def random_binomial(
 
 
 def random_uniform_float(
-        low_value: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.int_, np.float_, np.ndarray],
-        high_value: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.int_, np.float_, np.ndarray],
-        output_size: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.int_, np.float_, np.ndarray, None] = None,
+        low_value: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.integer, np.floating, np.ndarray],
+        high_value: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.integer, np.floating, np.ndarray],
+        output_size: Union[float, int, List[Union[int, float]], Tuple[Union[int, float], ...], np.integer, np.floating, np.ndarray, None] = None,
 
         dim: Union[int, None] = None,
 
@@ -135,7 +135,7 @@ def random_uniform_float(
     #     rand_init = ran_gen
 
     if (output_size is not None) and (dim is not None):
-        if isinstance(output_size, (int, float, np.int_, np.float_)):
+        if isinstance(output_size, (int, float, np.integer, np.floating)):
 
             output_size = (output_size, dim)
 
@@ -160,7 +160,7 @@ def random_uniform_float(
                     return random_uniform
 
 
-        elif isinstance(low_value, np.ndarray) and (isinstance(high_value, (int, float, np.int_, np.float_))):
+        elif isinstance(low_value, np.ndarray) and (isinstance(high_value, (int, float, np.integer, np.floating))):
             if len(low_value) > 1:
                 raise ValueError('size of low_value must be equal to size of high_value.')
 
@@ -169,7 +169,7 @@ def random_uniform_float(
                 random_uniform = float(rand_init.uniform(low=low_value, high=high_value))
                 return random_uniform
 
-        elif isinstance(low_value, (int, float, np.int_, np.float_)) and (isinstance(high_value, np.ndarray)):
+        elif isinstance(low_value, (int, float, np.integer, np.floating)) and (isinstance(high_value, np.ndarray)):
             if len(high_value) > 1:
                 raise ValueError('size of low_value must be equal to size of high_value.')
             else:
@@ -184,17 +184,17 @@ def random_uniform_float(
             # else:
             #     random_uniform = np.random.uniform(low=low_value, hig
 
-    elif (isinstance(low_value, (int, float, np.int_, np.float_)) is False) and (
-            isinstance(high_value, (int, float, np.int_, np.float_)) is False):
+    elif (isinstance(low_value, (int, float, np.integer, np.floating)) is False) and (
+            isinstance(high_value, (int, float, np.integer, np.floating)) is False):
         if len(low_value) != len(high_value):
             raise ValueError('size of low_value must be equal to size of high_value.')
 
-    elif (isinstance(low_value, (int, float, np.int_, np.float_)) is False) and (
-    isinstance(high_value, (int, float, np.int_, np.float_))):
+    elif (isinstance(low_value, (int, float, np.integer, np.floating)) is False) and (
+    isinstance(high_value, (int, float, np.integer, np.floating))):
         high_value = [high_value] * len(low_value)
 
-    elif (isinstance(low_value, (int, float, np.int_, np.float_))) and (
-            isinstance(high_value, (int, float, np.int_, np.float_)) is False):
+    elif (isinstance(low_value, (int, float, np.integer, np.floating))) and (
+            isinstance(high_value, (int, float, np.integer, np.floating)) is False):
         low_value = [low_value] * len(high_value)
 
 

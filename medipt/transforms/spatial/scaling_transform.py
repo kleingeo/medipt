@@ -91,8 +91,8 @@ class RandomScaling(ScalingTransform, RandomAffineTransform):
 
 
     def get_random_transform(self,
-                 min_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                 max_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                 min_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+                 max_scaling: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
                  transformation_dict: dict = None,
                  *args, **kwargs):
 
@@ -123,8 +123,8 @@ class RandomUniformScaling(ScalingTransform, RandomAffineTransform):
 
     def get_random_transform(
             self,
-            min_scaling: Union[int, float, np.int_, np.float_, np.ndarray] = None,
-            max_scaling: Union[int, float, np.int_, np.float_, np.ndarray] = None,
+            min_scaling: Union[int, float, np.integer, np.floating, np.ndarray] = None,
+            max_scaling: Union[int, float, np.integer, np.floating, np.ndarray] = None,
             transformation_dict: dict = None,
             *args, **kwargs):
 
