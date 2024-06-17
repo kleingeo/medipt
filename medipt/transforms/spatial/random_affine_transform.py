@@ -28,8 +28,8 @@ class RandomAffineTransform(SpatialTransform):
 
 
     def _get_random_transform(self,
-                              min_range: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                              max_range: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                              min_range: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+                              max_range: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
                               value_offset: Union[int, float] = None,
                               uniform: bool = False,
                               transform_dict: dict = None,
@@ -55,8 +55,8 @@ class RandomAffineTransform(SpatialTransform):
                                                      rand_init=self.rand_init)
 
 
-        elif isinstance(self.min_range, (int, float, np.ndarray, np.float_, np.int_)):
-            assert isinstance(self.max_range, (int, float, np.ndarray, np.float_, np.int_)), 'both min and max rotations must be numbers.'
+        elif isinstance(self.min_range, (int, float, np.ndarray, np.floating, np.integer)):
+            assert isinstance(self.max_range, (int, float, np.ndarray, np.floating, np.integer)), 'both min and max rotations must be numbers.'
 
 
             if uniform is False:

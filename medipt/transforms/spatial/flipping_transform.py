@@ -24,7 +24,7 @@ class FlippingTransform(SpatialTransform):
 
                 current_flip_axes.append(bool(flip_axis))
 
-        elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
+        elif isinstance(flip_axes, (int, float, np.integer, np.floating, np.bool_, bool)):
             current_flip_axes = [bool(flip_axes)] * self.dim
 
         else:
@@ -53,7 +53,7 @@ class RandomFlipping(FlippingTransform):
                              flip_axes: Union[
                                  List[Union[int, float, bool]],
                                  Tuple[Union[int, float, bool], ...],
-                                 Union[int, float, bool, np.int_, np.float_],
+                                 Union[int, float, bool, np.integer, np.floating],
                                  np.ndarray],
                              *args, **kwargs,
                              ):
@@ -69,7 +69,7 @@ class RandomFlipping(FlippingTransform):
             else:
                 raise ValueError('flip axes must be tuples, lists, or numbers.')
 
-        elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
+        elif isinstance(flip_axes, (int, float, np.integer, np.floating, np.bool_, bool)):
 
             probability = 0.5 * flip_axes
 
@@ -110,7 +110,7 @@ class RandomFlipping(FlippingTransform):
         #
         #         current_flip_axes.append(bool(current_flip_axis))
         #
-        # elif isinstance(flip_axes, (int, float, np.int_, np.float_, np.bool_, bool)):
+        # elif isinstance(flip_axes, (int, float, np.integer, np.floating, np.bool_, bool)):
         #     if flip_axes == 1:
         #         current_flip_axis = random_binomial(n=1, p=0.5,
         #                                             seed=self.seed,

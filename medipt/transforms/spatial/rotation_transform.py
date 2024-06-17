@@ -89,8 +89,8 @@ class RandomRotation(RotationTransform, RandomAffineTransform):
     def __init__(self,
                  dim: int,
                  used_dimensions: bool = None,
-                 # min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
-                 # max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
+                 # min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
+                 # max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
 
                  seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
                  legacy_random_state: bool = True,
@@ -111,8 +111,8 @@ class RandomRotation(RotationTransform, RandomAffineTransform):
 
 
     def get_random_transform(self,
-                             min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
-                             max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray, None] = None,
+                             min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
+                             max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
                              transformation_dict: dict = None,
                              *args, **kwargs):
 

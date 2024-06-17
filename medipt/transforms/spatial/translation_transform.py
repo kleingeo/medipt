@@ -62,8 +62,8 @@ class RandomTranslation(RandomAffineTransform, TranslationTransform):
     A translation transformation with a random offset.
     """
     def __init__(self,
-                 # min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                 # max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                 # min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+                 # max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
                  dim: Union[int, None] = 3,
                  used_dimensions: bool = None,
 
@@ -81,8 +81,8 @@ class RandomTranslation(RandomAffineTransform, TranslationTransform):
         super(RandomTranslation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
     def get_random_transform(self,
-                             min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                             max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                             min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+                             max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
                              transformation_dict=None,
                              *args, **kwargs):
 
@@ -111,14 +111,14 @@ class RandomCoordTranslation(RandomAffineTransform, TranslationTransform):
 
 
     def get_random_transform(self,
-                             coord: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
-                             translation_extent: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.int_, np.float_, np.ndarray],
+                             coord: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+                             translation_extent: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
                              transformation_dict: dict = None,
                              *args, **kwargs):
 
 
 
-        if isinstance(translation_extent, (int, float, np.float_, np.int_)):
+        if isinstance(translation_extent, (int, float, np.floating, np.integer)):
             translation_extent = np.ndarray([translation_extent] * self.dim)
         elif isinstance(translation_extent, (tuple, list)):
             translation_extent = np.array(translation_extent)
@@ -127,7 +127,7 @@ class RandomCoordTranslation(RandomAffineTransform, TranslationTransform):
                 translation_extent = np.array([translation_extent] * self.dim)
 
 
-        if isinstance(coord, (int, float, np.float_, np.int_)):
+        if isinstance(coord, (int, float, np.floating, np.integer)):
             coord = np.ndarray([coord] * self.dim)
         elif isinstance(coord, (tuple, list)):
             coord = np.array(coord)
