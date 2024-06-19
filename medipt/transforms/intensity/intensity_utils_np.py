@@ -115,3 +115,11 @@ def gaussian_noise_np(image: np.ndarray,
     gaussian = rand_init.normal(mean, sigma, image.shape)
     output_image = image + gaussian
     return output_image
+
+
+def change_image_gamma_np(image: np.ndarray,
+                          gamma: Union[int, float],
+                          *args, **kwargs) -> np.ndarray:
+
+    output_image = np.power(image, gamma)
+    return output_image

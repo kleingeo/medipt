@@ -1,6 +1,7 @@
 from typing import Union, Tuple, List
 import numpy as np
 from ...utils import random_uniform_float
+from ...utils.random_float import initialize_rand_state
 from .intensity_utils_np import gaussian_blur_np
 from .intensity_utils_sitk import gaussian_blur_sitk
 import SimpleITK as sitk
@@ -24,7 +25,7 @@ class GaussianBlur:
             return gaussian_blur_sitk(image, self.sigma, *args, **kwargs)
 
         else:
-            raise ImportError("image must be either a numpy array or a SimpleITK image.")
+            raise ImportError("Image must be either a numpy array or a SimpleITK image.")
 
 class RandomGaussianBlur:
 
@@ -40,6 +41,7 @@ class RandomGaussianBlur:
         self.seed = seed
         self.legacy_random_state = legacy_random_state
 
+        self.rand_init = initialize_rand_state(self.seed, self.legacy_random_state)
 
     def __call__(self,
                  image: Union[np.ndarray, sitk.Image],
@@ -49,7 +51,8 @@ class RandomGaussianBlur:
 
         sigma = random_uniform_float(low_value=self.min_sigma, high_value=self.max_sigma,
                                      seed=self.seed,
-                                     legacy_random_state=self.legacy_random_state)
+                                     legacy_random_state=self.legacy_random_state,
+                                     rand_init=self.rand_init)
 
 
         if isinstance(image, np.ndarray):

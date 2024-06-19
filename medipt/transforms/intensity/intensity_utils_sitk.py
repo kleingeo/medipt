@@ -190,3 +190,13 @@ def gaussian_noise_sitk(image: sitk.Image,
         output_image = sitk.Cast(output_image, image_default_pixel_type)
 
     return output_image
+
+
+def change_image_gamma_sitk(image: sitk.Image,
+                            gamma: Union[int, float],
+                            *args, **kwargs) -> sitk.Image:
+
+    exp_image_filter = sitk.PowImageFilter()
+    output_image = exp_image_filter.Execute(image, gamma)
+
+    return output_image

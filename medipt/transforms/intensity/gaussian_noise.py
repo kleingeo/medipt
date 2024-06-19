@@ -32,7 +32,7 @@ class GaussianNoise:
             return gaussian_noise_sitk(image, self.mean, self.sigma, *args, **kwargs)
 
         else:
-            raise ImportError("image must be either a numpy array or a SimpleITK image.")
+            raise ImportError("Image must be either a numpy array or a SimpleITK image.")
 
 
 class RandomGaussianNoise:
@@ -80,7 +80,8 @@ class RandomGaussianNoise:
 
             mean = random_uniform_float(low_value=self.min_mean, high_value=self.max_mean,
                                         seed=self.seed,
-                                        legacy_random_state=self.legacy_random_state)
+                                        legacy_random_state=self.legacy_random_state,
+                                        rand_init=self.rand_init)
 
         else:
             mean = self.mean
@@ -92,8 +93,9 @@ class RandomGaussianNoise:
 
 
             sigma = random_uniform_float(low_value=self.min_sigma, high_value=self.max_sigma,
-                                        seed=self.seed,
-                                        legacy_random_state=self.legacy_random_state)
+                                         seed=self.seed,
+                                         legacy_random_state=self.legacy_random_state,
+                                         rand_init=self.rand_init)
 
         else:
             sigma = self.sigma

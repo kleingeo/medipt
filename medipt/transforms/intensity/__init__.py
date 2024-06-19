@@ -3,7 +3,8 @@ from .gaussian_noise import GaussianNoise, RandomGaussianNoise
 
 
 from .rescale_intensity import RescaleIntensity
-from .shift_scale_intensity import ShiftScaleIntensity, RandomShiftScaleIntensity
+from .shift_scale_intensity import ShiftScaleIntensity
+from .scale_gamma_intensity import ScaleGammaIntensity
 from .clamp_intensity import ClampIntensity
 
 from .rescale_percentile import RescaleImageIntensityPercentile
