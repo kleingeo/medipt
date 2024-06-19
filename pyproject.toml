@@ -24,6 +24,8 @@ keywords=[
 ]
 
 # pyproject.toml
+[tool.setuptools_scm]
+
 [tool.setuptools]
 include-package-data = true
 
