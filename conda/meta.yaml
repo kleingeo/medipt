@@ -33,10 +33,6 @@ build:
 
 
 requirements:
-  build:
-    - versioneer
-    - setuptools_scm
-
   host:
     - python {{ environ.get('PYTHON_VERSION') }}
     - setuptools
@@ -44,7 +40,6 @@ requirements:
     - SimpleITK >=2.2.0
     - numpy >=1.20.0
     - scipy >=1.6.0
-    - versioneer
 
   run:
     - python {{ environ.get('PYTHON_VERSION') }}

@@ -15,6 +15,6 @@ import medipt.resample_image
 # from setuptools_scm import get_version
 #
 # __version__ = get_version(root='..', relative_to=__file__)
-import versioneer
-from . import _version
-__version__ = _version.get_versions()['version']
+# import versioneer
+# from . import _version
+# __version__ = _version.get_versions()['version']

@@ -2,8 +2,7 @@
 requires = [
     "setuptools>=61.0",
     "wheel",
-    "versioneer[toml]",
-
+    "setuptools_scm[toml]>=6.2",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -49,13 +48,13 @@ include_trailing_comma = true
 skip = [".gitingore", "__init__.py"]
 
 
-[tool.versioneer]
-VCS = "git"
-style = "pep440"
-versionfile_source = "medipt/_version.py"
-versionfile_build = "medipt/_version.py"
-tag_prefix = "v"
-parentdir_prefix = "medipt-"
+#[tool.versioneer]
+#VCS = "git"
+#style = "pep440"
+#versionfile_source = "medipt/_version.py"
+#versionfile_build = "medipt/_version.py"
+#tag_prefix = "v"
+#parentdir_prefix = "medipt-"
 
 
 [project.urls]
