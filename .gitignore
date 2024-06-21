@@ -77,8 +77,12 @@ target/
 *.pt
 *.pth
 
+# Ignore _version.py
+_version.py
+
 functional_legacy/
 
 old_data_loader/
 updated_dataloader/
 test_dataloader/
+test_scale_gamma/

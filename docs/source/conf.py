@@ -16,7 +16,10 @@ import medipt
 project = 'MedIPT'
 copyright = '2023, Geoff Klein'
 author = 'Geoff Klein'
-version = release = medipt.__version__
+from importlib.metadata import version as get_version
+release: str = get_version("medipt")
+# for example take major/minor
+version: str = ".".join(release.split('.')[:2])
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -38,7 +41,7 @@ extensions = [
 autodoc_typehints = "description"
 # build the templated autosummary files
 autosummary_generate = True
-
+autodoc_mock_imports = ['torch']
 
 master_doc = "index"
 

@@ -2,7 +2,7 @@
 requires = [
     "setuptools>=61.0",
     "wheel",
-    "setuptools_scm[toml]>=6.2",
+    "setuptools_scm[toml]>=8",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -24,6 +24,9 @@ keywords=[
 
 # pyproject.toml
 [tool.setuptools_scm]
+version_file = "medipt/_version.py"
+version_scheme = "release-branch-semver"
+parentdir_prefix_version = "medipt-"
 
 [tool.setuptools]
 include-package-data = true
