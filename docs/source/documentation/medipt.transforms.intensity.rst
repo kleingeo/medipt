@@ -52,14 +52,6 @@ medipt.transforms.intensity.intensity\_utils\_sitk module
    :undoc-members:
    :show-inheritance:
 
-medipt.transforms.intensity.rescale\_clamp\_intensity module
-------------------------------------------------------------
-
-.. automodule:: medipt.transforms.intensity.rescale_clamp_intensity
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 medipt.transforms.intensity.rescale\_intensity module
 -----------------------------------------------------
 
