@@ -87,3 +87,4 @@ updated_dataloader/
 test_dataloader/
 test_scale_gamma/
 sphinx_api_call.txt
+setup_hold.py

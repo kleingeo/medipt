@@ -7,7 +7,6 @@ from setuptools import (
 )
 from setuptools.command.build_ext import build_ext as _build_ext
 
-import setuptools_scm
 
 setup(
     name='medipt',

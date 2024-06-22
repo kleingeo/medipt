@@ -53,7 +53,6 @@ intersphinx_mapping = {
 }
 
 
-exclude_patterns = ['old_data_loader/*']
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
