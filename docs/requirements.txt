@@ -8,3 +8,4 @@ sphinx-toolbox~=3.4.0
 black
 sphinx-autodoc-typehints
 setuptools_scm
+build
