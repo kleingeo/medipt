@@ -16,10 +16,11 @@ import medipt
 project = 'MedIPT'
 copyright = '2023, Geoff Klein'
 author = 'Geoff Klein'
-from importlib.metadata import version as get_version
-release: str = get_version("medipt")
-# for example take major/minor
-version: str = ".".join(release.split('.')[:2])
+# from importlib.metadata import version as get_version
+# # release = get_version("medipt")
+# release = get_version(root='..', relative_to=__file__)
+# # for example take major/minor
+version = medipt.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
