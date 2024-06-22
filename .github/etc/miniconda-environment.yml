@@ -11,3 +11,4 @@ dependencies:
   - setuptools
   - versioneer
   - twine
+  - setuptools_scm
