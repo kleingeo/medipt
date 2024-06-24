@@ -9,3 +9,6 @@ black
 sphinx-autodoc-typehints
 setuptools_scm
 build
+nbsphinx
+pandoc
+jupyter

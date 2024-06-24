@@ -22,14 +22,14 @@ Documentation for the ImageProcessingTools package.
    documentation/medipt
 
 
+.. include:: ../../examples/examples.rst
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Examples:
 
-   examples/example1
-   examples/example2
-
-
+   examples/augmentation_example/spatial_augmentation_example
 
 
 Indices and tables

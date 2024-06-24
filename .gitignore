@@ -91,4 +91,4 @@ setup_hold.py
 
 
 # Add all from examples folder
-!examples/*
+!docs/source/examples/
