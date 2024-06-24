@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>medipt.transforms package &mdash; MedIPT</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+
+  
+    <link rel="canonical" href="medipt.org/documentation/medipt.transforms.html" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="medipt.transforms.intensity package" href="medipt.transforms.intensity.html" />
+    <link rel="prev" title="medipt.resample_image package" href="medipt.resample_image.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MedIPT
+          </a>
+              <div class="version">
+                0.1.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install Instructions:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install/installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package References:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="medipt.html">medipt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="medipt.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="medipt.resample_image.html">medipt.resample_image package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">medipt.transforms package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-medipt.transforms.transform_coordinate">medipt.transforms.transform_coordinate module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-medipt.transforms">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.utils.html">medipt.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.html#module-medipt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MedIPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="medipt.html">medipt package</a></li>
+      <li class="breadcrumb-item active">medipt.transforms package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/documentation/medipt.transforms.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="medipt-transforms-package">
+<h1>medipt.transforms package<a class="headerlink" href="#medipt-transforms-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="medipt.transforms.intensity.html">medipt.transforms.intensity package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.change_image_gamma">medipt.transforms.intensity.change_image_gamma module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.change_image_gamma.change_gamma"><code class="docutils literal notranslate"><span class="pre">change_gamma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.change_image_gamma.change_gamma_unnormalized"><code class="docutils literal notranslate"><span class="pre">change_gamma_unnormalized()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.change_image_gamma.random_change_gamma"><code class="docutils literal notranslate"><span class="pre">random_change_gamma()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.change_image_gamma.scale"><code class="docutils literal notranslate"><span class="pre">scale()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.clamp_intensity">medipt.transforms.intensity.clamp_intensity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.clamp_intensity.ClampIntensity"><code class="docutils literal notranslate"><span class="pre">ClampIntensity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.gaussian_blur">medipt.transforms.intensity.gaussian_blur module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.gaussian_blur.GaussianBlur"><code class="docutils literal notranslate"><span class="pre">GaussianBlur</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.gaussian_blur.RandomGaussianBlur"><code class="docutils literal notranslate"><span class="pre">RandomGaussianBlur</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.gaussian_noise">medipt.transforms.intensity.gaussian_noise module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.gaussian_noise.GaussianNoise"><code class="docutils literal notranslate"><span class="pre">GaussianNoise</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.gaussian_noise.RandomGaussianNoise"><code class="docutils literal notranslate"><span class="pre">RandomGaussianNoise</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.intensity_utils_np">medipt.transforms.intensity.intensity_utils_np module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.change_image_gamma_np"><code class="docutils literal notranslate"><span class="pre">change_image_gamma_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.clamp_intensity_np"><code class="docutils literal notranslate"><span class="pre">clamp_intensity_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.gaussian_blur_np"><code class="docutils literal notranslate"><span class="pre">gaussian_blur_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.gaussian_noise_np"><code class="docutils literal notranslate"><span class="pre">gaussian_noise_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.rescale_intensity_np"><code class="docutils literal notranslate"><span class="pre">rescale_intensity_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.rescale_intensity_window_np"><code class="docutils literal notranslate"><span class="pre">rescale_intensity_window_np()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_np.shift_scale_intensity_np"><code class="docutils literal notranslate"><span class="pre">shift_scale_intensity_np()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.intensity_utils_sitk">medipt.transforms.intensity.intensity_utils_sitk module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.change_image_gamma_sitk"><code class="docutils literal notranslate"><span class="pre">change_image_gamma_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.clamp_intensity_sitk"><code class="docutils literal notranslate"><span class="pre">clamp_intensity_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.gaussian_blur_sitk"><code class="docutils literal notranslate"><span class="pre">gaussian_blur_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.gaussian_noise_sitk"><code class="docutils literal notranslate"><span class="pre">gaussian_noise_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.min_max_intensity_sitk"><code class="docutils literal notranslate"><span class="pre">min_max_intensity_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.rescale_intensity_sitk"><code class="docutils literal notranslate"><span class="pre">rescale_intensity_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.rescale_intensity_window_sitk"><code class="docutils literal notranslate"><span class="pre">rescale_intensity_window_sitk()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.intensity_utils_sitk.shift_scale_intensity_sitk"><code class="docutils literal notranslate"><span class="pre">shift_scale_intensity_sitk()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.rescale_intensity">medipt.transforms.intensity.rescale_intensity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.rescale_intensity.RescaleIntensity"><code class="docutils literal notranslate"><span class="pre">RescaleIntensity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity.shift_scale_intensity">medipt.transforms.intensity.shift_scale_intensity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.intensity.html#medipt.transforms.intensity.shift_scale_intensity.ShiftScaleIntensity"><code class="docutils literal notranslate"><span class="pre">ShiftScaleIntensity</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.intensity.html#module-medipt.transforms.intensity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="medipt.transforms.spatial.html">medipt.transforms.spatial package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html">medipt.transforms.spatial.functional_legacy package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#medipt-transforms-spatial-functional-legacy-flipping-module">medipt.transforms.spatial.functional_legacy.flipping module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#medipt-transforms-spatial-functional-legacy-rotation-module">medipt.transforms.spatial.functional_legacy.rotation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#medipt-transforms-spatial-functional-legacy-scaling-module">medipt.transforms.spatial.functional_legacy.scaling module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#medipt-transforms-spatial-functional-legacy-translation-module">medipt.transforms.spatial.functional_legacy.translation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.functional_legacy.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.composite_transform">medipt.transforms.spatial.composite_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.composite_transform.CompositeTransform"><code class="docutils literal notranslate"><span class="pre">CompositeTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.composite_transform.CompositeTransform.add_transforms"><code class="docutils literal notranslate"><span class="pre">CompositeTransform.add_transforms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.composite_transform.CompositeTransform.create_composite"><code class="docutils literal notranslate"><span class="pre">CompositeTransform.create_composite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.composite_transform.CompositeTransform.create_inverse_composite"><code class="docutils literal notranslate"><span class="pre">CompositeTransform.create_inverse_composite()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.composite_transform.composite_transform"><code class="docutils literal notranslate"><span class="pre">composite_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.elastic_deformation_transform">medipt.transforms.spatial.elastic_deformation_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation.get_displacement_field"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation.get_displacement_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation.get_inverse_transform"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation.get_inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation.get_inverted_displacement_field"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation.get_inverted_displacement_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation.get_inverted_transform_from_displacement"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation.get_inverted_transform_from_displacement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformation.get_transform"><code class="docutils literal notranslate"><span class="pre">ElasticDeformation.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformationInputImage"><code class="docutils literal notranslate"><span class="pre">ElasticDeformationInputImage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformationInputImage.get_transform_on_input"><code class="docutils literal notranslate"><span class="pre">ElasticDeformationInputImage.get_transform_on_input()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformationOutputImage"><code class="docutils literal notranslate"><span class="pre">ElasticDeformationOutputImage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.ElasticDeformationOutputImage.get_transform_on_output"><code class="docutils literal notranslate"><span class="pre">ElasticDeformationOutputImage.get_transform_on_output()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformation"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformation.get_random_spline_params"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformation.get_random_spline_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformation.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformation.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformationTransformInputImage"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformationTransformInputImage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformationTransformInputImage.get_random_transform_on_input"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformationTransformInputImage.get_random_transform_on_input()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformationTransformOutputImage"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformationTransformOutputImage</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.elastic_deformation_transform.RandomElasticDeformationTransformOutputImage.get_random_transform_on_output"><code class="docutils literal notranslate"><span class="pre">RandomElasticDeformationTransformOutputImage.get_random_transform_on_output()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.flipping_transform">medipt.transforms.spatial.flipping_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.flipping_transform.FlippingTransform"><code class="docutils literal notranslate"><span class="pre">FlippingTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.flipping_transform.FlippingTransform.get_transform"><code class="docutils literal notranslate"><span class="pre">FlippingTransform.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.flipping_transform.RandomFlipping"><code class="docutils literal notranslate"><span class="pre">RandomFlipping</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.flipping_transform.RandomFlipping.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomFlipping.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.random_affine_transform">medipt.transforms.spatial.random_affine_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.random_affine_transform.RandomAffineTransform"><code class="docutils literal notranslate"><span class="pre">RandomAffineTransform</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.rotation_transform">medipt.transforms.spatial.rotation_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.rotation_transform.RandomRotation"><code class="docutils literal notranslate"><span class="pre">RandomRotation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.rotation_transform.RandomRotation.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomRotation.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.rotation_transform.RotationTransform"><code class="docutils literal notranslate"><span class="pre">RotationTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.rotation_transform.RotationTransform.get_transform"><code class="docutils literal notranslate"><span class="pre">RotationTransform.get_transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.scaling_transform">medipt.transforms.spatial.scaling_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.RandomScaling"><code class="docutils literal notranslate"><span class="pre">RandomScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.RandomScaling.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomScaling.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.RandomUniformScaling"><code class="docutils literal notranslate"><span class="pre">RandomUniformScaling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.RandomUniformScaling.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomUniformScaling.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.ScalingTransform"><code class="docutils literal notranslate"><span class="pre">ScalingTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.ScalingTransform.get_scale_transform"><code class="docutils literal notranslate"><span class="pre">ScalingTransform.get_scale_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.scaling_transform.ScalingTransform.get_transform"><code class="docutils literal notranslate"><span class="pre">ScalingTransform.get_transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.spatial_transform">medipt.transforms.spatial.spatial_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform"><code class="docutils literal notranslate"><span class="pre">SpatialTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_displacement_field"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_displacement_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_image_params"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_image_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_input_center"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_input_center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_input_origin"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_input_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_input_output_space"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_input_output_space()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_inverse_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_inverse_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_inverted_displacement_field"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_inverted_displacement_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_inverted_transform_from_displacement"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_inverted_transform_from_displacement()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_output_center"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_output_center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_output_origin"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_output_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform.SpatialTransform.get_random_point"><code class="docutils literal notranslate"><span class="pre">SpatialTransform.get_random_point()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.spatial_transform_init">medipt.transforms.spatial.spatial_transform_init module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.elastic_deformation_input_image"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.elastic_deformation_input_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.elastic_deformation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.elastic_deformation_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.flipping_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.flipping_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_bbox_translation"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_bbox_translation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_coord_translation"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_coord_translation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_elastic_deformation_input_image"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_elastic_deformation_input_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_elastic_deformation_output_image"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_elastic_deformation_output_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_elastic_deformation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_elastic_deformation_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_flipping_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_flipping_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_rotation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_rotation_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_scaling_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_scaling_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_translation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_translation_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.random_uniform_scaling_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.random_uniform_scaling_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.rotation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.rotation_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.scaling_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.scaling_transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.translate_input_center_to_input_origin"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.translate_input_center_to_input_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.translate_input_center_to_output_center"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.translate_input_center_to_output_center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.translate_input_origin_to_output_center"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.translate_input_origin_to_output_center()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.translate_random_input_center_to_input_origin"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.translate_random_input_center_to_input_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.spatial_transform_init.SpatialTransformInit.translation_transform"><code class="docutils literal notranslate"><span class="pre">SpatialTransformInit.translation_transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial.translation_transform">medipt.transforms.spatial.translation_transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomBBoxTranslation"><code class="docutils literal notranslate"><span class="pre">RandomBBoxTranslation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomBBoxTranslation.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomBBoxTranslation.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomCoordTranslation"><code class="docutils literal notranslate"><span class="pre">RandomCoordTranslation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomCoordTranslation.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomCoordTranslation.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomFactorInput"><code class="docutils literal notranslate"><span class="pre">RandomFactorInput</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomFactorInput.get_transform"><code class="docutils literal notranslate"><span class="pre">RandomFactorInput.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomTranslation"><code class="docutils literal notranslate"><span class="pre">RandomTranslation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.RandomTranslation.get_random_transform"><code class="docutils literal notranslate"><span class="pre">RandomTranslation.get_random_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputCenterToInputOrigin"><code class="docutils literal notranslate"><span class="pre">TranslateInputCenterToInputOrigin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputCenterToInputOrigin.get_transform"><code class="docutils literal notranslate"><span class="pre">TranslateInputCenterToInputOrigin.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputCenterToOutputCenter"><code class="docutils literal notranslate"><span class="pre">TranslateInputCenterToOutputCenter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputCenterToOutputCenter.get_transform"><code class="docutils literal notranslate"><span class="pre">TranslateInputCenterToOutputCenter.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputOriginToOutputCenter"><code class="docutils literal notranslate"><span class="pre">TranslateInputOriginToOutputCenter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateInputOriginToOutputCenter.get_transform"><code class="docutils literal notranslate"><span class="pre">TranslateInputOriginToOutputCenter.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateRandomInputCenterToInputOrigin"><code class="docutils literal notranslate"><span class="pre">TranslateRandomInputCenterToInputOrigin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslateRandomInputCenterToInputOrigin.get_transform"><code class="docutils literal notranslate"><span class="pre">TranslateRandomInputCenterToInputOrigin.get_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslationTransform"><code class="docutils literal notranslate"><span class="pre">TranslationTransform</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="medipt.transforms.spatial.html#medipt.transforms.spatial.translation_transform.TranslationTransform.get_transform"><code class="docutils literal notranslate"><span class="pre">TranslationTransform.get_transform()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="medipt.transforms.spatial.html#module-medipt.transforms.spatial">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-medipt.transforms.transform_coordinate">
+<span id="medipt-transforms-transform-coordinate-module"></span><h2>medipt.transforms.transform_coordinate module<a class="headerlink" href="#module-medipt.transforms.transform_coordinate" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="medipt.transforms.transform_coordinate.TransformCoordinate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">medipt.transforms.transform_coordinate.</span></span><span class="sig-name descname"><span class="pre">TransformCoordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/medipt/transforms/transform_coordinate.html#TransformCoordinate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#medipt.transforms.transform_coordinate.TransformCoordinate" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="medipt.transforms.transform_coordinate.TransformCoordinate.transform_coordinate">
+<span class="sig-name descname"><span class="pre">transform_coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phys_coordinate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/medipt/transforms/transform_coordinate.html#TransformCoordinate.transform_coordinate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#medipt.transforms.transform_coordinate.TransformCoordinate.transform_coordinate" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.12)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>phys_coordinate</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><em>List</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><em>Tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>, </em><em>...</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – </p></li>
+<li><p><strong>transform</strong> (<em>Transform</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-medipt.transforms">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-medipt.transforms" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="medipt.resample_image.html" class="btn btn-neutral float-left" title="medipt.resample_image package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="medipt.transforms.intensity.html" class="btn btn-neutral float-right" title="medipt.transforms.intensity package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Geoff Klein.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

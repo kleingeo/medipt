@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>medipt.resample_image.resample_image &mdash; MedIPT</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+
+  
+    <link rel="canonical" href="medipt.org/_modules/medipt/resample_image/resample_image.html" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            MedIPT
+          </a>
+              <div class="version">
+                0.1.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Install Instructions:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install/installation.html">Installation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Package References:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/medipt.html">medipt package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MedIPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">medipt.resample_image.resample_image</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for medipt.resample_image.resample_image</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">SimpleITK</span> <span class="k">as</span> <span class="nn">sitk</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+
+
+<div class="viewcode-block" id="get_sitk_interpolator"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.get_sitk_interpolator">[docs]</a><span class="k">def</span> <span class="nf">get_sitk_interpolator</span><span class="p">(</span><span class="n">interpolator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return an sitk interpolator object for the given string.</span>
+
+<span class="sd">    :param interpolator: Interpolator type as string.</span>
+<span class="sd">                         &#39;nearest&#39;: sitk.sitkNearestNeighbor</span>
+<span class="sd">                         &#39;linear&#39;: sitk.sitkLinear</span>
+<span class="sd">                         &#39;cubic&#39;: sitk.sitkBSpline</span>
+<span class="sd">                         &#39;label_gaussian&#39;: sitk.sitkLabelGaussian</span>
+<span class="sd">                         &#39;gaussian&#39;: sitk.sitkGaussian</span>
+<span class="sd">                         &#39;lanczos&#39;: sitk.sitkLanczosWindowedSinc</span>
+<span class="sd">    :return: The sitk interpolator object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interpolator</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;nearest&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkNearestNeighbor</span>
+        <span class="k">elif</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkLinear</span>
+        <span class="k">elif</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;cubic&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkBSpline</span>
+        <span class="k">elif</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;label_gaussian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkLabelGaussian</span>
+        <span class="k">elif</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;gaussian&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkGaussian</span>
+        <span class="k">elif</span> <span class="n">interpolator</span> <span class="o">==</span> <span class="s1">&#39;lanczos&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkLanczosWindowedSinc</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">interpolator</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">interpolator</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;invalid interpolator type&#39;</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_simpleitk_pix_type"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.get_simpleitk_pix_type">[docs]</a><span class="k">def</span> <span class="nf">get_simpleitk_pix_type</span><span class="p">(</span><span class="n">pixel_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the SimpleITK pixel type for the given pixel type string.</span>
+
+<span class="sd">    :param pixel_type: The pixel type as string.</span>
+<span class="sd">                       &#39;float32&#39;: sitk.sitkFloat32</span>
+<span class="sd">                       &#39;float64&#39;: sitk.sitkFloat64</span>
+<span class="sd">                       &#39;int8&#39;: sitk.sitkInt8</span>
+<span class="sd">                       &#39;int16&#39;: sitk.sitkInt16</span>
+<span class="sd">                       &#39;int32&#39;: sitk.sitkInt32</span>
+<span class="sd">                       &#39;int64&#39;: sitk.sitkInt64</span>
+<span class="sd">                       &#39;uint8&#39;: sitk.sitkUInt8</span>
+<span class="sd">                       &#39;uint16&#39;: sitk.sitkUInt16</span>
+<span class="sd">                       &#39;uint32&#39;: sitk.sitkUInt32</span>
+<span class="sd">                       &#39;uint64&#39;: sitk.sitkUInt64</span>
+<span class="sd">                       &#39;complex64&#39;: sitk.sitkComplexFloat32</span>
+<span class="sd">                       &#39;complex128&#39;: sitk.sitkComplexFloat64</span>
+<span class="sd">    :return: The SimpleITK pixel type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixel_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;float32&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkFloat32</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;float64&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkFloat64</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;int8&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkInt8</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;int16&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkInt16</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;int32&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkInt32</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;int64&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkInt64</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;uint8&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkUInt8</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;uint16&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkUInt16</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;uint32&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkUInt32</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;uint64&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkUInt64</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;complex64&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkComplexFloat32</span>
+        <span class="k">elif</span> <span class="n">pixel_type</span> <span class="o">==</span> <span class="s1">&#39;complex128&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sitk</span><span class="o">.</span><span class="n">sitkComplexFloat64</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pixel_type</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pixel_type</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;invalid pixel type&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ResampleImage"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.ResampleImage">[docs]</a><span class="k">class</span> <span class="nc">ResampleImage</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+
+                 <span class="n">interpolator</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+
+
+                 <span class="n">post_processing_sitk</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">]],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+                 <span class="n">pixel_type</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;float32&#39;</span><span class="p">,</span>
+                 <span class="n">default_pixel_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+                 <span class="n">dim</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+                 <span class="n">used_dimensions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">seed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">BitGenerator</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">legacy_random_state</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">used_dimensions</span> <span class="o">=</span> <span class="n">used_dimensions</span> <span class="ow">or</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">dim</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">legacy_random_state</span> <span class="o">=</span> <span class="n">legacy_random_state</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">interpolator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_sitk</span> <span class="o">=</span> <span class="n">post_processing_sitk</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_type</span> <span class="o">=</span> <span class="n">pixel_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_pixel_value</span> <span class="o">=</span> <span class="n">default_pixel_value</span>
+
+
+<div class="viewcode-block" id="ResampleImage.resample_image"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.ResampleImage.resample_image">[docs]</a>    <span class="k">def</span> <span class="nf">resample_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">image</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span>
+                       <span class="n">input_output_space_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                       <span class="n">reference_image</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">transform</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Transform</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+
+        <span class="c1"># if image is None:</span>
+        <span class="c1">#     image = input_output_space_dict.get(&#39;input_image&#39;, None)</span>
+        <span class="c1">#     if image is None:</span>
+        <span class="c1">#         image = input_output_space_dict.get(&#39;image&#39;, None)</span>
+        <span class="c1">#         if image is None:</span>
+        <span class="c1">#             raise Exception(&#39;No image was provided.&#39;)</span>
+
+        <span class="n">output_size</span> <span class="o">=</span> <span class="n">input_output_space_dict</span><span class="p">[</span><span class="s1">&#39;output_size&#39;</span><span class="p">]</span>
+        <span class="n">output_spacing</span> <span class="o">=</span> <span class="n">input_output_space_dict</span><span class="p">[</span><span class="s1">&#39;output_spacing&#39;</span><span class="p">]</span>
+        <span class="n">output_origin</span> <span class="o">=</span> <span class="n">input_output_space_dict</span><span class="p">[</span><span class="s1">&#39;output_origin&#39;</span><span class="p">]</span>
+        <span class="n">output_direction</span> <span class="o">=</span> <span class="n">input_output_space_dict</span><span class="p">[</span><span class="s1">&#39;output_direction&#39;</span><span class="p">]</span>
+
+        <span class="n">sitk_interpolator</span> <span class="o">=</span> <span class="n">get_sitk_interpolator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_pixel_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">default_value_filter</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">MinimumMaximumImageFilter</span><span class="p">()</span>
+            <span class="n">default_value_filter</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">default_pixel_value</span> <span class="o">=</span> <span class="n">default_value_filter</span><span class="o">.</span><span class="n">GetMinimum</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">default_pixel_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_pixel_value</span>
+
+        <span class="n">resample_filter</span> <span class="o">=</span> <span class="n">sitk</span><span class="o">.</span><span class="n">ResampleImageFilter</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">reference_image</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetReferenceImage</span><span class="p">(</span><span class="n">reference_image</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetOutputSpacing</span><span class="p">(</span><span class="n">output_spacing</span><span class="p">)</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetOutputOrigin</span><span class="p">(</span><span class="n">output_origin</span><span class="p">)</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetOutputDirection</span><span class="p">(</span><span class="n">output_direction</span><span class="p">)</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetSize</span><span class="p">(</span><span class="n">output_size</span><span class="p">)</span>
+
+        <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetDefaultPixelValue</span><span class="p">(</span><span class="n">default_pixel_value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">transform</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetTransform</span><span class="p">(</span><span class="n">sitk</span><span class="o">.</span><span class="n">AffineTransform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetTransform</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
+
+        <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetInterpolator</span><span class="p">(</span><span class="n">sitk_interpolator</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sitk_pix_type</span> <span class="o">=</span> <span class="n">get_simpleitk_pix_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixel_type</span><span class="p">)</span>
+            <span class="n">resample_filter</span><span class="o">.</span><span class="n">SetOutputPixelType</span><span class="p">(</span><span class="n">sitk_pix_type</span><span class="p">)</span>
+
+        <span class="n">resampled_image</span> <span class="o">=</span> <span class="n">resample_filter</span><span class="o">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resampled_image</span></div>
+
+
+
+<div class="viewcode-block" id="ResampleImage.get_images"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.ResampleImage.get_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                   <span class="n">images</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">],</span>
+                   <span class="n">input_output_space_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+
+                   <span class="n">reference_image</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Transform</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                   <span class="p">):</span>
+
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">input_output_space_dict</span><span class="p">,</span> <span class="n">reference_image</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">resample_image</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">input_output_space_dict</span><span class="p">,</span> <span class="n">reference_image</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResampleImage.get_resampled_images"><a class="viewcode-back" href="../../../documentation/medipt.resample_image.html#medipt.resample_image.resample_image.ResampleImage.get_resampled_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_resampled_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                             <span class="n">image</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">],</span>
+                             <span class="n">input_output_space_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+                             <span class="n">reference_image</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                             <span class="n">transform</span><span class="p">:</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Transform</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                             <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">sitk</span><span class="o">.</span><span class="n">Image</span><span class="p">]:</span>
+
+        <span class="n">output_image_sitk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_images</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">input_output_space_dict</span><span class="p">,</span>
+                                            <span class="n">reference_image</span><span class="p">,</span> <span class="n">transform</span><span class="p">,</span>
+                                            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_sitk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">post_processing_sitk</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">post_processing_sitk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_sitk</span><span class="p">:</span>
+                    <span class="n">output_image_sitk</span> <span class="o">=</span> <span class="n">post_processing_sitk</span><span class="p">(</span><span class="n">output_image_sitk</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_image_sitk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_processing_sitk</span><span class="p">(</span><span class="n">output_image_sitk</span><span class="p">)</span>
+
+
+        <span class="k">return</span> <span class="n">output_image_sitk</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Geoff Klein.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
