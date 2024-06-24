@@ -21,3 +21,8 @@ If `SimpleITK` is not installed:
 - SimpleITK >= 2.2
 - numpy >= 1.20
 - scipy >= 1.6
+
+
+# Usage
+
+Example can be found in [here](docs/source/examples/augmentation_example/spatial_augmentation_example.ipynb) for how to augment and resample a 3D image.
