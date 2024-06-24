@@ -14,23 +14,23 @@ class TranslationTransform(SpatialTransform):
     """
     Translation transformation base class.
     """
-    def __init__(self,
-                 dim: int = 3,
-                 used_dimensions: bool = None,
-                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
-                 legacy_random_state: bool = True,
-                 *args, **kwargs):
-        """
-        Initializer
-        :param dim: The dimension.
-        :param used_dimensions: Boolean list of which dimension indizes to use for the transformation.
-        :param args: Arguments passed to super init.
-        :param kwargs: Keyword arguments passed to super init.
-        """
-
-        super(TranslationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
-
-        assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
+    # def __init__(self,
+    #              dim: int = 3,
+    #              used_dimensions: bool = None,
+    #              seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+    #              legacy_random_state: bool = True,
+    #              *args, **kwargs):
+    #     """
+    #     Initializer
+    #     :param dim: The dimension.
+    #     :param used_dimensions: Boolean list of which dimension indizes to use for the transformation.
+    #     :param args: Arguments passed to super init.
+    #     :param kwargs: Keyword arguments passed to super init.
+    #     """
+    #
+    #     super(TranslationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+    #
+    #     assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
 
     def _get_transform(self,
                       translation: Union[List[float], Tuple[float, ...], float],
@@ -61,24 +61,24 @@ class RandomTranslation(RandomAffineTransform, TranslationTransform):
     """
     A translation transformation with a random offset.
     """
-    def __init__(self,
-                 # min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
-                 # max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
-                 dim: Union[int, None] = 3,
-                 used_dimensions: bool = None,
-
-                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
-                 legacy_random_state: bool = True,
-                 *args, **kwargs):
-        """
-        Initializer.
-        :param dim: The dimension.
-        :param random_offset: List of random offsets per dimension. Random offset is calculated uniformly within [-random_offset[i], random_offset[i]]
-        :param args: Arguments passed to super init.
-        :param kwargs: Keyword arguments passed to super init.
-        """
-
-        super(RandomTranslation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+    # def __init__(self,
+    #              # min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+    #              # max_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],
+    #              dim: Union[int, None] = 3,
+    #              used_dimensions: bool = None,
+    #
+    #              seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+    #              legacy_random_state: bool = True,
+    #              *args, **kwargs):
+    #     """
+    #     Initializer.
+    #     :param dim: The dimension.
+    #     :param random_offset: List of random offsets per dimension. Random offset is calculated uniformly within [-random_offset[i], random_offset[i]]
+    #     :param args: Arguments passed to super init.
+    #     :param kwargs: Keyword arguments passed to super init.
+    #     """
+    #
+    #     super(RandomTranslation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
     def get_random_transform(self,
                              min_trans: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray],

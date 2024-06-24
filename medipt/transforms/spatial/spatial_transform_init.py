@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 import numpy as np
 import SimpleITK as sitk
 from typing import Union, Tuple, List
+from types import ModuleType
+from ...utils.random_float import initialize_rand_state
 
 from .composite_transform import CompositeTransform
 from .rotation_transform import RotationTransform, RandomRotation
@@ -37,6 +39,7 @@ class SpatialTransformInit:
                  used_dimensions: bool = None,
                  seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
                  legacy_random_state: bool = True,
+                 rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
                  *args, **kwargs
                  ):
 
@@ -45,6 +48,10 @@ class SpatialTransformInit:
         self.seed = seed
         self.legacy_random_state = legacy_random_state
 
+        if rand_init is None:
+            self.rand_init = initialize_rand_state(self.seed, self.legacy_random_state)
+        else:
+            self.rand_init = rand_init
 
     # Rotation Transforms
 
@@ -55,6 +62,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_rotation_transform(self,
@@ -65,6 +73,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -77,6 +86,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_scaling_transform(self,
@@ -86,6 +96,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_uniform_scaling_transform(self,
@@ -95,6 +106,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -107,6 +119,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_flipping_transform(self,
@@ -116,6 +129,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -131,6 +145,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_translation_transform(self,
@@ -140,6 +155,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -150,6 +166,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -160,6 +177,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -170,6 +188,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -180,6 +199,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -190,6 +210,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -201,6 +222,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
 
@@ -252,6 +274,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_elastic_deformation_transform(self,
@@ -261,6 +284,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def elastic_deformation_input_image(self,
@@ -270,6 +294,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_elastic_deformation_input_image(self,
@@ -279,6 +304,7 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)
 
     def random_elastic_deformation_output_image(self,
@@ -288,4 +314,5 @@ class SpatialTransformInit:
             used_dimensions=self.used_dimensions,
             seed=self.seed,
             legacy_random_state=self.legacy_random_state,
+            rand_init=self.rand_init,
             *args, **kwargs)

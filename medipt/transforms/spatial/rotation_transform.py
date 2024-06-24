@@ -1,5 +1,6 @@
 from abc import ABC
 from typing import Union, Tuple, List
+from types import ModuleType
 import SimpleITK as sitk
 import numpy as np
 
@@ -12,22 +13,23 @@ class RotationTransform(SpatialTransform):
     Rotation transformation base class.
     """
 
-    def __init__(self,
-                 dim: int = 3,
-                 used_dimensions: bool = None,
-                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
-                 legacy_random_state: bool = True,
-                 *args, **kwargs):
-        """
-        Initializer
-        :param dim: The dimension.
-        :param used_dimensions: Boolean list of which dimension indizes to use for the transformation.
-        :param args: Arguments passed to super init.
-        :param kwargs: Keyword arguments passed to super init.
-        """
-
-
-        super(RotationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+    # def __init__(self,
+    #              dim: int = 3,
+    #              used_dimensions: bool = None,
+    #              seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+    #              legacy_random_state: bool = True,
+    #              rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
+    #              *args, **kwargs):
+    #     """
+    #     Initializer
+    #     :param dim: The dimension.
+    #     :param used_dimensions: Boolean list of which dimension indizes to use for the transformation.
+    #     :param args: Arguments passed to super init.
+    #     :param kwargs: Keyword arguments passed to super init.
+    #     """
+    #
+    #
+    #     super(RotationTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, rand_init, *args, **kwargs)
 
 
     def _get_transform(self,
@@ -86,26 +88,26 @@ class RandomRotation(RotationTransform, RandomAffineTransform):
     """
     A rotation transformation with random angles (in radian).
     """
-    def __init__(self,
-                 dim: int,
-                 used_dimensions: bool = None,
-                 # min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
-                 # max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
-
-                 seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
-                 legacy_random_state: bool = True,
-
-                 *args, **kwargs):
-        """
-        Initializer.
-        :param dim: The dimension.
-        :param random_angles: List of random angles per dimension. Random angle is calculated uniformly within [-random_angles[i], random_angles[i]]
-        :param args: Arguments passed to super init.
-        :param kwargs: Keyword arguments passed to super init.
-        """
-
-
-        super(RandomRotation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+    # def __init__(self,
+    #              dim: int,
+    #              used_dimensions: bool = None,
+    #              # min_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
+    #              # max_angles: Union[Union[List[Union[int, float]], Tuple[Union[int, float], ...]], int, float, np.integer, np.floating, np.ndarray, None] = None,
+    #
+    #              seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
+    #              legacy_random_state: bool = True,
+    #
+    #              *args, **kwargs):
+    #     """
+    #     Initializer.
+    #     :param dim: The dimension.
+    #     :param random_angles: List of random angles per dimension. Random angle is calculated uniformly within [-random_angles[i], random_angles[i]]
+    #     :param args: Arguments passed to super init.
+    #     :param kwargs: Keyword arguments passed to super init.
+    #     """
+    #
+    #
+    #     super(RandomRotation, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
 
 
 

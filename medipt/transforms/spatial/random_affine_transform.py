@@ -1,4 +1,5 @@
 from typing import Union, Tuple, List
+from types import ModuleType
 from ...utils import random_uniform_float
 
 import numpy as np
@@ -14,12 +15,12 @@ class RandomAffineTransform(SpatialTransform):
                  used_dimensions: bool = None,
                  seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
                  legacy_random_state: bool = True,
-
+                 rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
                  *args, **kwargs
                  ):
 
 
-        super(RandomAffineTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, *args, **kwargs)
+        super(RandomAffineTransform, self).__init__(dim, used_dimensions, seed, legacy_random_state, rand_init, *args, **kwargs)
 
 
         self.min_range = None

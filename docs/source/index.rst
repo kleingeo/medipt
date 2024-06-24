@@ -22,6 +22,12 @@ Documentation for the ImageProcessingTools package.
    documentation/medipt
 
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples:
+
+   examples/example1
+   examples/example2
 
 
 

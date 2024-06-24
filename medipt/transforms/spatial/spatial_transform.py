@@ -16,6 +16,7 @@ class SpatialTransform(ABC):
                  used_dimensions: bool = None,
                  seed: Union[np.random.RandomState, np.random.Generator, np.random.BitGenerator, int, None] = None,
                  legacy_random_state: bool = True,
+                 rand_init: Union[ModuleType, np.random.Generator, np.random.BitGenerator] = None,
                  *args, **kwargs):
         """
         Initializer.
@@ -39,8 +40,10 @@ class SpatialTransform(ABC):
         self.inverted_displacement_field = None
         self.inverted_transform_from_displacement = None
 
-
-        self.rand_init = initialize_rand_state(self.seed, self.legacy_random_state)
+        if rand_init is None:
+            self.rand_init = initialize_rand_state(self.seed, self.legacy_random_state)
+        else:
+            self.rand_init = rand_init
 
         assert len(self.used_dimensions) == dim, 'Length of used_dimensions must be equal to dim.'
 

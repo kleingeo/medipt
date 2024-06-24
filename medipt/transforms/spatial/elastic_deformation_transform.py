@@ -56,7 +56,7 @@ class ElasticDeformation(SpatialTransform):
         # physical_dimensions = np.matmul(direction_reshape * self.image_spacing, self.image_size)
 
         physical_dimensions = np.array(self.image_spacing) * np.array(self.image_size)
-
+        physical_dimensions = physical_dimensions.astype('float')
 
         mesh_size = [grid_node - self.spline_order for grid_node in self.num_grid_points]
         t = sitk.BSplineTransform(self.dim, self.spline_order)
